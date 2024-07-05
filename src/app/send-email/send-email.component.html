@@ -1,0 +1,71 @@
+<div id="app">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <!-- Marque de la navbar -->
+    <a href="#" class="navbar-brand">CRM</a>
+
+    <!-- Bouton Réseaux Sociaux -->
+    <button class="reseau-button" >
+      Réseaux Sociaux
+    </button>
+
+    <!-- Liens de la navbar à gauche -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a href="../Super_Admin" class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</a>
+      </li>
+    </ul>
+
+    <!-- Liens de la navbar à droite -->
+    <div>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav">
+          <a href="/profile" class="nav-link" routerLink="../profile">
+            <img src="../../assets/person.svg" alt="profile" class="profile-icon"><!-- Icône de profil -->
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link" (click)="logout()">LogOut</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="form-container">
+    <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+      <div formArrayName="recipients">
+        <div *ngFor="let recipient of recipientForms.controls; let i = index" [formGroupName]="i">
+          <div>
+            <label for="display_name">Display Name:</label>
+            <input type="text" formControlName="display_name" id="display_name">
+          </div>
+          <div>
+            <label for="identifier">Email:</label>
+            <input type="email" formControlName="identifier" id="identifier">
+          </div>
+          <button type="button" (click)="removeRecipient(i)">Remove</button>
+        </div>
+      </div>
+  
+      <button type="button" (click)="addRecipient()">Add Recipient</button>
+  
+      <div>
+        <label for="subject">Subject:</label>
+        <input type="text" formControlName="subject" id="subject">
+      </div>
+  
+      <div>
+        <label for="body">Body:</label>
+        <textarea formControlName="body" id="body"></textarea>
+      </div>
+  
+      <button type="submit">Send Email</button>
+    </form>
+  </div>
+  
+  <!-- Ajouter un message de confirmation ici -->
+  <div *ngIf="emailSentSuccessfully" class="card success-message-card">
+    <div class="card-body">
+      <h5 class="card-title text-success">Email envoyé avec succès!</h5>
+    </div>
+  </div>
+  

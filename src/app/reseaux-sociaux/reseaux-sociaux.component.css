@@ -1,0 +1,109 @@
+.reseau-button {
+    background-color: #242524; /* Couleur de fond */
+    border: none; /* Supprime la bordure */
+    margin-right: 10px; /* Marge à droite */
+    opacity: 0.6; /* Opacité initiale */
+    transition: opacity 0.3s ease; /* Transition fluide pour l'opacité */
+    color: ghostwhite; /* Couleur du texte */
+  }
+  
+  .reseau-button:hover {
+    opacity: 0.9; /* Opacité augmentée au survol */
+  }
+  
+  .profile-icon {
+    width: 24px; /* Taille de l'icône de profil */
+    height: 24px;
+    border-radius: 50%; /* Forme ronde */
+    margin-left: 10px; /* Marge à gauche */
+  }
+  
+  .navbar-nav .nav-item {
+    margin-left: 10px; /* Espacement entre les éléments de la navbar */
+  }
+  
+  .sidebar {
+    padding: 20px;
+  }
+  
+  .sidebar h3 {
+    color: #333;
+  }
+  
+  .network-buttons {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .network-button {
+    background-color: #1f1f1f;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .network-button:hover {
+    background-color: #3f3d3d;
+  }
+  
+  .social-content {
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .social-content .event {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .social-content.gmail .event {
+    background-color: #100f0f;
+    margin-right: 80%;
+    color: ghostwhite; 
+    text-align: center;
+    border: none;/* Couleur spécifique pour Gmail */
+  }
+  
+  .social-content.whatsapp .event {
+    background-color: #100f0f;
+    margin-right: 80%;
+    color: ghostwhite; 
+    text-align: center;
+    border: none; /* Couleur spécifique pour WhatsApp */
+  }
+  
+  .social-content.facebook .event {
+    background-color: #100f0f;
+    margin-right: 80%;
+    color: ghostwhite; 
+    text-align: center;
+    border: none; /* Couleur spécifique pour Facebook */
+  }
+  
+  .social-content.instagram .event {
+    background-color: #100f0f;
+    margin-right: 80%;
+    color: ghostwhite; 
+    text-align: center;
+    border: none; /* Couleur spécifique pour Instagram */
+  }
+  
+  .social-content.linkedin .event {
+    background-color: #100f0f;
+    margin-right: 80%;
+    color: ghostwhite; 
+    text-align: center;
+    border: none; /* Couleur spécifique pour LinkedIn */
+  }
+  
+  .social-content .event button {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+  

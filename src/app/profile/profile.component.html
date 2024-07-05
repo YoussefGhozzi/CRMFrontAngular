@@ -1,0 +1,30 @@
+<div id="app">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a href="#" class="navbar-brand">CRM</a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a href="../{{ currentUser?.role }}" class="nav-link" routerLink="../{{ currentUser?.role }}">Dashboard {{ currentUser?.role }}</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container" *ngIf="currentUser; else loggedOut">
+    <div class="profile-card">
+      <h2>Profil de {{ currentUser.nom }} {{ currentUser.prenom }}</h2>
+      <p>Email: {{ currentUser.email }}</p>
+      <p>Adresse: {{ currentUser.adresse }}</p>
+      <p>Age: {{ currentUser.age }}</p>
+      <p>Rôle: {{ currentUser.role }}</p>
+      <!-- Autres informations du profil -->
+    </div>
+  </div>
+
+  <ng-template #loggedOut>
+    <div class="logged-out-message">
+      <p>Veuillez vous connecter.</p>
+    </div>
+  </ng-template>
+  <div class="Login">
+    <router-outlet></router-outlet>
+  </div>
+</div>

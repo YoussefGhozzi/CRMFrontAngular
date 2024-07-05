@@ -1,0 +1,101 @@
+<div id="app">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <!-- Marque de la navbar -->
+      <a href="#" class="navbar-brand">CRM</a>
+  
+      <!-- Bouton Réseaux Sociaux -->
+      <button class="reseau-button" type="button">
+        Réseaux Sociaux
+      </button>
+     
+      <!-- Liens de la navbar à gauche -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a href="../Super_Admin" class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</a>
+        </li>
+      </ul>
+  
+      <!-- Liens de la navbar à droite -->
+      <div>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav">
+            <a href="/profile" class="nav-link" routerLink="../profile">
+              <img src="../../assets/person.svg" alt="profile" class="profile-icon"><!-- Icône de profil -->
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link" (click)="logout()">LogOut</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar pour les réseaux sociaux -->
+        <div class="col-md-3 bg-light sidebar">
+          <h3>Réseaux Sociaux</h3>
+          <div class="network-buttons">
+            <button class="network-button" (click)="loadSocialNetwork('gmail')">Gmail</button>
+            <button class="network-button" (click)="loadSocialNetwork('whatsapp')">WhatsApp</button>
+            <button class="network-button" (click)="loadSocialNetwork('facebook')">Facebook</button>
+            <button class="network-button" (click)="loadSocialNetwork('instagram')">Instagram</button>
+            <button class="network-button" (click)="loadSocialNetwork('linkedin')">LinkedIn</button>
+            <!-- Ajoutez d'autres boutons pour d'autres réseaux sociaux si nécessaire -->
+          </div>
+        </div>
+  
+        <!-- Contenu principal -->
+        <div class="col-md-9">
+          <!-- Contenu dynamique selon le réseau social sélectionné -->
+          <div *ngIf="selectedSocialNetwork === 'gmail'" class="social-content gmail">
+            <div class="event">
+              <button class="event" href="../send-mail" routerLink="../send-mail">Nouveau message</button>
+            </div>
+            <div class="event">
+              <button class="event" href="../email-list-component" routerLink="../email-list">Voir la boîte de réception</button>
+            </div>
+            <!-- Ajoutez d'autres événements pour Gmail si nécessaire -->
+          </div>
+          <div *ngIf="selectedSocialNetwork === 'whatsapp'" class="social-content whatsapp">
+            <div class="event">
+              <button class="event" >Envoyer un message</button>
+            </div>
+            <div class="event">
+              <button class="event">Voir les discussions</button>
+            </div>
+            <!-- Ajoutez d'autres événements pour WhatsApp si nécessaire -->
+          </div>
+          <div *ngIf="selectedSocialNetwork === 'facebook'" class="social-content facebook">
+            <div class="event">
+              <button class="event">Envoyer un message</button>
+            </div>
+            <div class="event">
+              <button class="event">Voir les discussions</button>
+            </div>
+            <!-- Ajoutez d'autres événements pour Facebook si nécessaire -->
+          </div>
+          <div *ngIf="selectedSocialNetwork === 'instagram'" class="social-content instagram">
+            <div class="event">
+              <button class="event">Envoyer un message</button>
+            </div>
+            <div class="event">
+              <button class="event">Voir les discussions</button>
+            </div>
+            <!-- Ajoutez d'autres événements pour Instagram si nécessaire -->
+          </div>
+          <div *ngIf="selectedSocialNetwork === 'linkedin'" class="social-content linkedin">
+            <div class="event">
+              <button class="event">Envoyer un message</button>
+            </div>
+            <div class="event">
+              <button class="event">Voir les discussions</button>
+            </div>
+            <!-- Ajoutez d'autres événements pour LinkedIn si nécessaire -->
+          </div>
+          <!-- Ajoutez d'autres sections pour d'autres réseaux sociaux si nécessaire -->
+        </div>
+      </div>
+    </div>
+  </div>
+  

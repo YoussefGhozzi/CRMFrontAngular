@@ -1,0 +1,5 @@
+/* app.component.css */
+.navbar-nav .nav-item .dropdown-menu {
+    max-width: 200px;
+  }
+  

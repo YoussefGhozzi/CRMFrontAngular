@@ -1,0 +1,60 @@
+<div id="app">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <!-- Marque de la navbar -->
+      <a href="#" class="navbar-brand">CRM</a>
+  
+      <!-- Bouton Réseaux Sociaux -->
+      <button class="reseau-button" >
+        Réseaux Sociaux
+      </button>
+  
+      <!-- Liens de la navbar à gauche -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a href="../Super_Admin" class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</a>
+        </li>
+      </ul>
+  
+      <!-- Liens de la navbar à droite -->
+      <div>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav">
+            <a href="/profile" class="nav-link" routerLink="../profile">
+              <img src="../../assets/person.svg" alt="profile" class="profile-icon"><!-- Icône de profil -->
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link" (click)="logout()">LogOut</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  
+
+
+
+<!-- email-list.component.html -->
+<div class="email-card" *ngFor="let email of emails">
+    <div class="card">
+      <div class="card-header">
+        <h5>{{ email.subject }}</h5>
+      </div>
+      <div class="card-body">
+        <p><strong>Date:</strong> {{ email.date }}</p>
+        <p><strong>From:</strong> {{ email.from_attendee.display_name }} ({{ email.from_attendee.identifier }})</p>
+        <p><strong>To:</strong> 
+          <span *ngFor="let attendee of email.to_attendees">
+            {{ attendee.display_name }} ({{ attendee.identifier }}),
+          </span>
+        </p>
+        <p><strong>Role:</strong> {{ email.role }}</p>
+        <p><strong>Body:</strong></p>
+        <div [innerHTML]="email.body"></div>
+        
+        <div *ngFor="let attachment of email.attachments">
+            <p><strong>Attachments:</strong></p>
+          <a [href]="attachment.url | safeUrl" target="_blank"(click)="openAttachment(attachment.path)">{{ attachment.name }}</a>
+        </div>
+      </div>
+    </div>
+</div>
