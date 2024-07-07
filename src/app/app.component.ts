@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { TokenStorageService } from './_services/token-storage.service';
 import {AuthService} from './_services/auth.service'
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,19 +16,22 @@ export class AppComponent {
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
-  constructor(private authService: AuthService, private router: Router,private tokenStorageService: TokenStorageService) { }
+  
+  
 
-  ngOnInit(): void {
-    this.isLoggedIn = !!localStorage.getItem('user');
-    if (this.isLoggedIn) {
-      const user = JSON.parse(localStorage.getItem('user')!);
-      this.username = user.username;
-    }
-  }
+
+
+
+
+
+  constructor(private authService: AuthService, private router: Router,private tokenStorageService: TokenStorageService,private http: HttpClient) {}
+
+
 
   logout(): void {
     this.tokenStorageService.signOut();
     this.isLoggedIn = false;
     this.router.navigate(['home']);
   }
+
 }

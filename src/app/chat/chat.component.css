@@ -1,0 +1,531 @@
+
+
+
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+}
+
+.chat-list li {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.chat-list li:hover {
+  background-color: #f1f1f1;
+}
+
+.chat-window {
+  margin-top: 20px;
+}
+
+.message-list {
+  list-style: none;
+  padding: 0;
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.message-list li {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-sent {
+  align-self: flex-end;
+  background-color: #d4e9fc;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.message-received {
+  align-self: flex-start;
+  background-color: #e6e6e6;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.message-sent-text {
+  text-align: right;
+}
+
+.message-received-text {
+  text-align: left;
+}
+
+.message-input {
+  display: flex;
+  margin-top: 20px;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.message-input button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.message-input button:hover {
+  background-color: #45a049;
+}
+
+.message-sent {
+  float: right;
+  clear: both;
+  margin-right: 10px;
+  background-color: #d4e9fc;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.message-received {
+  float: left;
+  clear: both;
+  margin-left: 10px;
+  background-color: #e6e6e6;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.message-sent-text {
+  text-align: right;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.message-received-text {
+  text-align: left;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.message-sent {
+  float: right;
+  clear: both;
+  margin-right: 10px;
+  background-color: #d4e9fc;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.message-received {
+  float: left;
+  clear: both;
+  margin-left: 10px;
+  background-color: #e6e6e6;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.message-sent-text {
+  /* Couleur verte pour les messages envoyés par l'utilisateur */
+  text-align: right;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.message-received-text {
+  text-align: left;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.message-sent {
+  float: right;
+  clear: both;
+  margin-right: 10px;
+  background-color: #d4e9fc;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.message-received {
+  float: left;
+  clear: both;
+  margin-left: 10px;
+  background-color: #e6e6e6;
+  padding: 5px;
+  border-radius: 5px;
+}
+.message-sent-text {
+  text-align: right;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.message-received-text {
+  text-align: left;
+  display: block;
+  margin-bottom: 5px;
+}
+.message-sent-text {
+  text-align: right;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.message-received-text {
+  text-align: left;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.message-sent {
+  float: right;
+  clear: both;
+  margin-right: 10px;
+  background-color: #45a049; /* Couleur verte pour le fond des messages envoyés par l'utilisateur */
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff; /* Couleur du texte à l'intérieur du cadre vert */
+}
+
+.message-received {
+  float: left;
+  clear: both;
+  margin-left: 10px;
+  background-color: #e6e6e6;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.attachment-info {
+  font-style: italic;
+  margin-left: 10px;
+  color: #666; /* Couleur du texte pour l'information sur l'attachement */
+}
+
+.message-sent {
+  float: right;
+  clear: both;
+  margin-right: 10px;
+  background-color: #45a049; /* Couleur verte pour le fond des messages envoyés par l'utilisateur */
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff; /* Couleur du texte à l'intérieur du cadre vert */
+}
+
+.message-received {
+  float: left;
+  clear: both;
+  margin-left: 10px;
+  background-color: #e6e6e6;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.message-sent-text {
+
+  text-align: right;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.message-received-text {
+  text-align: left;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.message-sent {
+  float: right;
+  clear: both;
+  margin-right: 10px;
+  background-color: #45a049; /* Couleur verte pour le fond des messages envoyés par l'utilisateur */
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff; /* Couleur du texte à l'intérieur du cadre vert */
+}
+
+.message-received {
+  float: left;
+  clear: both;
+  margin-left: 10px;
+  background-color: #e6e6e6;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.attachment-info {
+  font-style: italic;
+  margin-left: 5px;
+  color: #666; /* Couleur du texte pour l'information sur l'attachement */
+}
+
+.attachment-icon {
+  margin-right: 5px;
+  color: #45a049; /* Couleur verte pour l'icône d'image */
+}
+.attachment-info-send{
+  color:#ccc;
+}
+/* email-list.component.css */
+
+.email-card {
+  margin: 10px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: #fff; /* Fond blanc pour contraste */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+.card-header {
+  background-color: #f0f0f0; /* Couleur de l'en-tête */
+  padding: 10px;
+  border-bottom: 1px solid #ccc; /* Bordure en bas */
+  border-top-left-radius: 5px; /* Coins arrondis */
+  border-top-right-radius: 5px;
+}
+
+.card-header h5 {
+  margin: 0;
+  font-size: 1.25rem; /* Taille de police */
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card-body p {
+  margin-bottom: 5px; /* Espacement entre les paragraphes */
+}
+
+.card-body strong {
+  font-weight: bold; /* Texte en gras */
+}
+
+.card-body .attachments-list {
+  margin-top: 10px;
+}
+
+.card-body .attachments-list a {
+  display: block;
+  margin-bottom: 5px;
+  color: #007bff; /* Couleur du lien */
+  text-decoration: none; /* Pas de soulignement */
+}
+
+.card-body .attachments-list a:hover {
+  text-decoration: underline; /* Soulignement au survol */
+}
+
+.profile-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%; /* Icône de profil ronde */
+  margin-left: 10px;
+}
+
+.navbar {
+  margin-bottom: 20px; /* Espacement en bas de la navbar */
+}
+
+.reseau-button {
+  background-color: #242524;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.reseau-button:hover {
+  opacity: 0.9;
+}
+
+.navbar-brand {
+  font-size: 1.5rem; /* Taille de police plus grande pour le titre */
+}
+
+.navbar-nav .nav-item {
+  margin-left: 10px;
+}
+
+.navbar-nav.ml-auto {
+  display: flex;
+  align-items: center; /* Centrer verticalement les éléments */
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ccc; /* Couleur au survol */
+}
+
+.logout-link {
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+  .email-card {
+    margin: 5px; /* Réduire la marge sur mobile */
+  }
+  
+  .navbar-brand {
+    font-size: 1.2rem; /* Taille de police réduite pour mobile */
+  }
+}
+/* CSS pour la liste des contacts */
+.contact-list {
+  list-style: none;
+  padding: 0;
+  width: 30%; /* Ajustez la largeur selon vos besoins */
+  float: left;
+  border-right: 1px solid #ccc; /* Ligne de séparation */
+}
+
+.contact-list li {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.contact-list li:hover {
+  background-color: #f1f1f1;
+}
+
+/* CSS pour la fenêtre de discussion */
+.chat-window {
+  width: 70%; /* Ajustez la largeur selon vos besoins */
+  float: left;
+  padding-left: 20px;
+}
+
+.message-list {
+  list-style: none;
+  padding: 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* CSS pour les messages envoyés et reçus */
+.message-sent, .message-received {
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.message-sent {
+  background-color: #45a049; /* Couleur verte pour les messages envoyés */
+  color: #fff; /* Couleur du texte pour les messages envoyés */
+}
+
+.message-received {
+  background-color: #e6e6e6; /* Couleur de fond pour les messages reçus */
+}
+
+/* CSS pour l'info d'attachement */
+.attachment-info-send, .attachment-info {
+  font-style: italic;
+  color: #666;
+  margin-left: 5px;
+}
+/* CSS pour la liste des discussions */
+.chat-list-container {
+  width: 30%; /* 1/3 de la largeur totale */
+  float: left;
+  padding: 20px; /* Ajustez selon vos besoins */
+  box-sizing: border-box;
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+  overflow-y: auto;
+  max-height: calc(100vh - 160px); /* Hauteur maximale ajustée pour la liste de discussions */
+}
+
+.chat-list li {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.chat-list li:hover {
+  background-color: #f1f1f1;
+}
+
+/* CSS pour la fenêtre de discussion */
+.chat-window {
+  width: 70%; /* 2/3 de la largeur totale */
+  float: left;
+  padding: 20px; /* Ajustez selon vos besoins */
+  box-sizing: border-box;
+}
+
+.message-list {
+  list-style: none;
+  padding: 0;
+  max-height: calc(100vh - 200px); /* Hauteur maximale ajustée pour la fenêtre de discussion */
+  overflow-y: auto;
+}
+
+.message-input {
+  display: flex;
+  margin-top: 20px;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.message-input button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.message-input button:hover {
+  background-color: #45a049;
+}
+.butt{
+  background-color: #1ac220; /* Couleur de fond du bouton */
+  color: rgb(15, 14, 14); /* Couleur du texte */
+  border: none; /* Supprime la bordure */
+  padding: 10px 20px; /* Espacement intérieur */
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Curseur au survol */
+  transition: background-color 0.3s ease; /* Transition douce pour l'animation */ background-color: ghostwhite;
+}
+.butt:hover{
+  background-color: #45a049; 
+}

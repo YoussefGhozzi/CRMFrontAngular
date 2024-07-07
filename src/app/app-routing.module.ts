@@ -14,6 +14,7 @@ import { RoleGuard } from './guards/Role.Guard';
 import { ReseauxSociauxComponent } from './reseaux-sociaux/reseaux-sociaux.component';
 import { SendEmailComponent } from './send-email/send-email.component';
 import {EmailListComponent}from './email-list-component/email-list-component.component'
+import { ChatComponent } from './chat/chat.component';
 
 
 
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path:'reseaux-sociaux', component:ReseauxSociauxComponent },
   {path:'send-mail',component:SendEmailComponent},
   {path:'email-list',component:EmailListComponent},
+  {path:'chat',component:ChatComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path:'**',redirectTo:'home'},
 ];

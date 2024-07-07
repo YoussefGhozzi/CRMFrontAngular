@@ -19,7 +19,7 @@ export class UnipileService {
     });
 
    
-    return this.http.post<any>(this.apiUrl, formData, { headers });
+    return this.http.post<any>(`${this.apiUrl}/api/v1/emails`, formData, { headers });
 }
 
 getAllEmails(): Observable<any> {
@@ -34,5 +34,33 @@ getAllEmails(): Observable<any> {
   console.log('Headers:', headers);
     console.log('Params:', params);
   return this.http.get<any>(`${this.apiUrl}/api/v1/emails`, { headers, params });
+}
+
+getAllChats(): Observable<any> {
+  const headers = new HttpHeaders({ 'X-API-KEY': this.apiKey });
+  return this.http.get(`${this.apiUrl}/api/v1/chats`, { headers });
+}
+
+getAllMessagesFromChat(chat_id: string): Observable<any> {
+  const headers = new HttpHeaders({ 'X-API-KEY': this.apiKey});
+  return this.http.get(`${this.apiUrl}/api/v1/chats/${chat_id}/messages`, { headers });
+}
+
+
+sendMessage(chat_id: string, text: string): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-API-KEY': this.apiKey,
+    'Content-Type': 'application/json'
+  });
+  const url = `${this.apiUrl}/messaging/sendMessage`;
+  const body = { chat_id, text };
+  return this.http.post(`${this.apiUrl}/api/v1/chats/${chat_id}/messages`, body, { headers });
+}
+getChats(): Observable<any[]> {
+  const headers = new HttpHeaders({
+    'X-API-KEY': this.apiKey,
+    'Content-Type': 'application/json'
+  });
+  return this.http.get<any[]>(`${this.apiUrl}/messaging/getChats`, { headers });
 }
 }

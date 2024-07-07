@@ -19,8 +19,14 @@ import { SendEmailComponent } from './send-email/send-email.component';
 import { ReseauxSociauxComponent } from './reseaux-sociaux/reseaux-sociaux.component';
 import { EmailListComponent } from './email-list-component/email-list-component.component';
 import { UnipileService} from './_services/unipile.service';
-import { SafeUrlPipe } from './safe-url.pipe'; 
+import { SafeUrlPipe } from './safe-url.pipe';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ChatComponent } from './chat/chat.component';
+
+
+
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
     LoginComponent,
@@ -34,7 +40,8 @@ import { SafeUrlPipe } from './safe-url.pipe';
     SendEmailComponent,
     ReseauxSociauxComponent,
     EmailListComponent,
-    SafeUrlPipe 
+    SafeUrlPipe,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +60,7 @@ import { SafeUrlPipe } from './safe-url.pipe';
   {path:'reseaux-sociaux', component:ReseauxSociauxComponent },
   {path:'send-mail',component:SendEmailComponent},
   {path:'email-list',component:EmailListComponent},
+  {path:'chat',component:ChatComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path:'**',redirectTo:'home'}
     ])
