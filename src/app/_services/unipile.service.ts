@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders ,HttpParams} from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { Observable , throwError} from 'rxjs';
+import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -62,5 +62,19 @@ getChats(): Observable<any[]> {
     'Content-Type': 'application/json'
   });
   return this.http.get<any[]>(`${this.apiUrl}/messaging/getChats`, { headers });
+}
+getMessageAttachment(attachment_id: string, message_id: string): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-API-KEY': this.apiKey,
+  });
+
+  return this.http.get(`${this.apiUrl}/messaging/attachments/${attachment_id}/messages/${message_id}`, { headers })
+    .pipe(
+      catchError(this.handleError)
+    );
+}
+private handleError(error: any) {
+  console.error('An error occurred', error);
+  return throwError(error.message || error);
 }
 }

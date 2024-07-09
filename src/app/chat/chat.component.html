@@ -61,11 +61,7 @@
             'message-sent': message.is_sender === 1,
             'message-received': message.is_sender === 0
           }">
-            <span *ngIf="message.is_sender === 1" class="message-sent-text">
-              {{ message.text }}
-              <span *ngIf="hasAttachment(message)" class="attachment-info-send"> !!! This message contains an attachment !!!</span>
-            </span>
-            <span *ngIf="message.is_sender === 0" class="message-received-text">
+            <span class="message-text">
               {{ message.text }}
               <span *ngIf="hasAttachment(message)" class="attachment-info"> !!! This message contains an attachment !!!</span>
             </span>
@@ -74,7 +70,9 @@
     
         <div class="message-input">
           <input [(ngModel)]="text" placeholder="Enter your message">
-          <button (click)="sendMessage()">Send</button>
+          <input type="file" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png, .pdf"> <!-- Champ pour sélectionner une pièce jointe -->
+          <button (click)="sendAttachment()">Send Attachment</button> <!-- Bouton pour envoyer la pièce jointe -->
+          <button (click)="sendMessage()">Send Message</button> <!-- Bouton pour envoyer le message -->
         </div>
       </div>
     </div>

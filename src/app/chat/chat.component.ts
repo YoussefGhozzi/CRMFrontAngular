@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChatService } from '../_services/chat.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-chat',
@@ -10,16 +11,25 @@ export class ChatComponent implements OnInit, OnDestroy {
   chats: any[] = [];
   messages: any[] = [];
   chat_id: string = '';
-  text: string = '';
   selectedChat: any;
   errorMessage: string = '';
-  existingContacts: any[] = []; // Tableau pour stocker les contacts existants
+  existingContacts: any[] = [];
+  attachment: any;
   private refreshTimeout: any;
+  attendeesIds: string[] = [];
+  text: string = '';
+  attachmentPath: string = '';
+  attachments: any[] = [];
+  uploadedFileUrl: string = '';
+  selectedFile: File | null = null;
+  selectedFileUrl: SafeResourceUrl | null = null;
 
-  constructor(private chatService: ChatService) {}
+  constructor(private chatService: ChatService, private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
+    console.log('Component initialized. Fetching chats...');
     this.getChats();
+  this.scheduleNextRefresh();
   }
 
   ngOnDestroy() {
@@ -29,12 +39,13 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   getChats() {
+    console.log('Fetching chats from backend...');
     this.chatService.getChats().subscribe(
-      data => {
+      (data: any) => {
         if (data && data.items && Array.isArray(data.items)) {
           this.chats = data.items;
-          // Récupérer les numéros de téléphone à partir des chats
           this.updateContactsFromChats();
+          console.log('Chats fetched successfully.', this.chats.length, 'chats found.');
         } else {
           this.errorMessage = 'La réponse du service getChats n\'est pas valide.';
           console.error('La réponse du service getChats n\'est pas valide', data);
@@ -51,16 +62,25 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.selectedChat = chat;
     if (chat && chat.id) {
       this.chat_id = chat.id;
+      this.attendeesIds = [chat.provider_id];
       this.getAllMessagesFromChat(this.chat_id);
-      console.log('Selected chat object:', chat); // Affiche l'objet de la discussion sélectionnée dans la console
+      console.log('Selected chat object:', chat);
     }
   }
-
+  scheduleNextRefresh() {
+    this.refreshTimeout = setTimeout(() => {
+      this.getAllMessagesFromChat(this.chat_id);
+      console.log(this.getAllMessagesFromChat)
+    }, 5000); // Rafraîchir toutes les 5 secondes
+  }
   getAllMessagesFromChat(chatId: string) {
-    this.chatService.getAllMessagesFromChat(chatId).subscribe(
-      data => {
+    console.log('Fetching messages for chat id:', chatId);
+    console.log('tous les message ',    this.chatService.getAllMessages(chatId));
+    this.chatService.getAllMessages(chatId).subscribe(
+      (data: any) => {
         if (Array.isArray(data)) {
           this.messages = data;
+          console.log('Messages fetched successfully.', data, 'messages found.');
           this.scheduleNextRefresh();
         } else {
           this.errorMessage = 'La réponse du service getAllMessagesFromChat n\'est pas un tableau.';
@@ -74,20 +94,20 @@ export class ChatComponent implements OnInit, OnDestroy {
     );
   }
 
-  scheduleNextRefresh() {
-    this.refreshTimeout = setTimeout(() => {
-      this.getAllMessagesFromChat(this.chat_id);
-    }, 5000); // Rafraîchir toutes les 5 secondes
-  }
-
   sendMessage() {
     if (this.chat_id && this.text.trim()) {
       this.chatService.sendMessage(this.chat_id, this.text).subscribe(
         response => {
           this.text = '';
-          // Mise à jour des messages après l'envoi du message
           this.getAllMessagesFromChat(this.chat_id);
           console.log('Message envoyé avec succès :', response);
+          this.messages.push({
+            text: this.text,
+            is_sender: 1, // Définissez le bon expéditeur pour ce message
+            attachments: [] // S'il n'y a pas de pièce jointe à afficher avec ce message
+          });
+          this.text = ''; // Effacez le champ de saisie après l'envoi du message
+          // });
         },
         error => {
           this.errorMessage = 'Erreur lors de l\'envoi du message.';
@@ -99,11 +119,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   extractPhoneNumber(chatProviderId: string): string {
     if (!chatProviderId) return '';
-
-    // Extraction du numéro de téléphone à partir de chat_provider_id
-    const phoneNumber = chatProviderId.split('@')[0]; // Supposant que le format est '21650712311@s.whatsapp.net'
-    console.log('Extracted phone number:', phoneNumber);
-
+    const phoneNumber = chatProviderId.split('@')[0];
     return phoneNumber;
   }
 
@@ -114,24 +130,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  hasAttachment(message: any): boolean {
-    return message && message.attachments && message.attachments.length > 0;
-  }
-
-  showAttachment(message: any) {
-    console.log('Attachment:', message.attachments);
-    // Code pour afficher les détails de la pièce jointe ou gérer la logique d'affichage
-  }
-
   logout(): void {
-    // Ajouter ici la logique de déconnexion si nécessaire
+    // Logique de déconnexion
   }
 
   registerName(contact: any) {
     const newName = prompt('Entrez le nom du contact:');
     if (newName) {
       contact.name = newName;
-      // Sauvegarder le nom du contact (à adapter pour votre logique de sauvegarde)
       this.saveContactName(contact);
     }
   }
@@ -150,8 +156,129 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   saveContactName(contact: any) {
-    // Logique pour sauvegarder le nom du contact
-    // Exemple : sauvegarder dans une base de données ou localStorage
     console.log('Contact saved:', contact);
   }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+
+   
+  }
+
+  sendAttachment() {
+    if (this.selectedFile) {
+      this.chatService.sendWhatsAppAttachment(this.chat_id, this.attendeesIds, this.text, this.selectedFile).subscribe(
+        (response: any) => {
+          console.log('Attachment sent successfully:', response);
+          this.uploadedFileUrl = response.fileUrl; // Assurez-vous que `response.fileUrl` contient l'URL correcte du fichier après l'envoi
+          const fileName = this.selectedFile?.name; // Récupérez le nom du fichier sélectionné
+          this.addSuccessMessage(`Fichier "${fileName}" envoyé avec succès.`);
+
+          if (this.selectedChat) {
+            if (!this.selectedChat.attachments) {
+              this.selectedChat.attachments = [];
+            }
+            this.selectedChat.attachments.push({ url: this.uploadedFileUrl, name: fileName });
+          }
+          this.messages.push({
+            text: 'Fichier attaché envoyé avec succès',
+            is_sender: 1, // Définissez le bon expéditeur pour ce message
+            attachments: [] // S'il n'y a pas de pièce jointe à afficher avec ce message
+          });
+          // });
+          // Rafraîchir la liste des messages ou la page ici si nécessaire
+
+          // Réinitialiser les variables
+          this.selectedFile = null;
+          this.selectedFileUrl = null;
+        },
+        (error: any) => {
+          console.error('Error sending attachment', error);
+        }
+      );
+    } else {
+      console.error('No file selected');
+    }
+  }
+  addSuccessMessage(message: string) {
+    const successMessage = {
+      text: message,
+      is_sender: 1, // Indique que c'est un message envoyé par l'utilisateur
+      attachments: [] // Vous pouvez ajouter des informations sur l'envoi ici si nécessaire
+    };
+    this.messages.push(successMessage);
+  }
+  
+  // loadAttachments() {
+  //   this.chatService.getAttachments(this.chat_id).subscribe(
+  //     (response: any) => {
+  //       console.log('Attachments received successfully:', response);
+  //       this.attachments = response;
+  //     },
+  //     (error: any) => {
+  //       console.error('Error receiving attachments', error);
+  //     }
+  //   );
+  // }
+
+  isImage(url: string): boolean {
+    if (!url) {
+      return false;
+    }
+    const splitUrl = url.split('.');
+    const extension = splitUrl[splitUrl.length - 1].toLowerCase();
+    if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' || extension === 'gif') {
+      return true;
+    } return false;}
+
+  handleFileInput(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.attachment = file;
+      this.attachmentPath = file.name;
+    } else {
+      this.attachment = null;
+      this.attachmentPath = '';
+    }
+  }
+
+  openFile() {
+    if (this.selectedFileUrl) {
+      window.open(this.selectedFileUrl.toString(), '_blank');
+    }
+  }
+
+  isPdfType(fileType: string| undefined): boolean {
+    return fileType === 'application/pdf';
+  }
+  isWordType(fileType: string| undefined): boolean {
+    return !!fileType &&fileType.includes('application/word') 
+  }
+  
+  isExcelType(fileType: string| undefined): boolean {
+    return !!fileType &&fileType.includes('application/excel') 
+  }
+  
+  isCsvType(fileType: string| undefined): boolean {
+    return !!fileType &&fileType.includes('text/csv');
+  }
+  
+
+  isDocumentType(fileType: string| undefined): boolean {
+    return (
+      fileType === 'application/msword' ||
+      fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+      fileType === 'application/vnd.ms-excel' ||
+      fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
+  }
+
+  isImageType(fileType: string | undefined): boolean {
+    return !!fileType && fileType.startsWith('image/');
+  }
+  hasAttachment(message: any): boolean {
+    return message && message.attachments && message.attachments.length > 0;
+  }
+  
+ 
 }

@@ -22,6 +22,7 @@ import { UnipileService} from './_services/unipile.service';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ChatComponent } from './chat/chat.component';
+import { ResizeImagePipe } from './resize-image.pipe';
 
 
 
@@ -42,6 +43,7 @@ import { ChatComponent } from './chat/chat.component';
     EmailListComponent,
     SafeUrlPipe,
     ChatComponent,
+    ResizeImagePipe,
   ],
   imports: [
     BrowserModule,

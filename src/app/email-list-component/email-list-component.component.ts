@@ -21,6 +21,7 @@ export class EmailListComponent implements OnInit {
 fetchEmails(): void {
   this.emailService.getAllEmails().subscribe(
     (data: any) => {
+      console.log("data email",data)
       this.emails = data.items; // Assurez-vous que 'items' est correct selon votre API
       this.cursor = data.cursor; // Assurez-vous que 'cursor' est correct selon votre API
       
