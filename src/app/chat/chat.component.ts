@@ -23,6 +23,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   uploadedFileUrl: string = '';
   selectedFile: File | null = null;
   selectedFileUrl: SafeResourceUrl | null = null;
+  username:string="";
 
   constructor(private chatService: ChatService, private sanitizer: DomSanitizer) {}
 

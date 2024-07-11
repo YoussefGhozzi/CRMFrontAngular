@@ -1,80 +1,111 @@
 <div id="app">
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <!-- Marque de la navbar -->
-    <a href="#" class="navbar-brand">CRM</a>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+      <!-- Marque de la navbar -->
+      <a class="navbar-brand" routerLink="/">CRM</a>
+      <!-- Bouton Réseaux Sociaux -->
+<button class="reseau-button" routerLink="../reseaux-sociaux">
+  Réseaux Sociaux
+</button>
 
-    <!-- Bouton Réseaux Sociaux -->
-    <button class="reseau-button">
-      Réseaux Sociaux
-    </button>
-
-    <!-- Liens de la navbar à gauche -->
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a href="../Super_Admin" class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</a>
-      </li>
-    </ul>
-
-    <!-- Liens de la navbar à droite -->
-    <div>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav">
-          <a href="/profile" class="nav-link" routerLink="../profile">
-            <img src="../../assets/person.svg" alt="profile" class="profile-icon"><!-- Icône de profil -->
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link" (click)="logout()">LogOut</a>
-        </li>
-      </ul>
+    <!-- Autres éléments de menu peuvent être ajoutés ici -->
+  
+      <!-- Bouton Menu -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <!-- Contenu de la navbar -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Liens de la navbar à gauche -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <button class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</button>
+          </li>
+        </ul>
+        
+       
+  
+        <!-- Liens de la navbar à droite -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">{{ username }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href=""(click)="logout()">Déconnexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">
+              <mat-icon>person</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.facebook.com" target="_blank">
+              <mat-icon style="color: blue;">facebook</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/chat">
+              <mat-icon style="color: green;">chat</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/email-list">
+              <mat-icon style="color: red;">email</mat-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
+</div>
 
-  <div *ngIf="errorMessage" class="error-message">
-    {{ errorMessage }}
-  </div>
-  
-  <div class="chat-container">
-    <!-- Colonne pour la liste des discussions -->
-    <div class="chat-list-column">
+
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
+<div class="chat-container">
+  <!-- Colonne pour la liste des discussions -->
+  <div class="chat-list-column">
       <div class="chat-list-container">
-        <h3>Discussions</h3>
-        <ul class="chat-list">
-          <li *ngFor="let chat of chats" (click)="selectChat(chat)">
-            <!-- Affichage initial du numéro de téléphone -->
-            <p>Numéro de téléphone: +{{ getPhoneNumberFromChat(chat)}}</p>
-            <!-- Afficher le nom si disponible après enregistrement -->
-            <p *ngIf="chat.name">Nom de contact: {{ chat.name }}</p>
-            <!-- Bouton pour enregistrer le nom -->
-            <button *ngIf="!chat.name" (click)="registerName(chat)" class="butt">Enregistrer Nom</button>
-          </li>
-        </ul>
+          <h1>Mes Contacts :</h1>
+          <ul class="chat-list">
+              <li *ngFor="let chat of chats" (click)="selectChat(chat)">
+                  <!-- Affichage initial du numéro de téléphone -->
+                  <p>Numéro de téléphone: +{{ getPhoneNumberFromChat(chat) }}</p>
+                  <!-- Afficher le nom si disponible après enregistrement -->
+                  <p *ngIf="chat.name">Nom de contact: {{ chat.name }}</p>
+                  <!-- Bouton pour enregistrer le nom -->
+                  <button *ngIf="!chat.name" (click)="registerName(chat)" class="butt">Enregistrer Nom</button>
+              </li>
+          </ul>
       </div>
-    </div>
-  
-    <!-- Colonne pour la fenêtre de discussion -->
-    <div class="chat-window-column">
+  </div>
+
+  <!-- Colonne pour la fenêtre de discussion -->
+  <div class="chat-window-column">
       <div *ngIf="selectedChat" class="chat-window">
-        <h3>Discussion avec {{ selectedChat.name ? selectedChat.name : getPhoneNumberFromChat(selectedChat) }}</h3>
-        <ul class="message-list">
-          <li *ngFor="let message of messages" [ngClass]="{
-            'message-sent': message.is_sender === 1,
-            'message-received': message.is_sender === 0
-          }">
-            <span class="message-text">
-              {{ message.text }}
-              <span *ngIf="hasAttachment(message)" class="attachment-info"> !!! This message contains an attachment !!!</span>
-            </span>
-          </li>
-        </ul>
-    
-        <div class="message-input">
-          <input [(ngModel)]="text" placeholder="Enter your message">
-          <input type="file" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png, .pdf"> <!-- Champ pour sélectionner une pièce jointe -->
-          <button (click)="sendAttachment()">Send Attachment</button> <!-- Bouton pour envoyer la pièce jointe -->
-          <button (click)="sendMessage()">Send Message</button> <!-- Bouton pour envoyer le message -->
-        </div>
+          <h1>Discussion avec {{ selectedChat.name ? selectedChat.name : getPhoneNumberFromChat(selectedChat) }}</h1>
+          <ul class="message-list">
+              <li *ngFor="let message of messages" [ngClass]="{
+                  'message-sent': message.is_sender === 1,
+                  'message-received': message.is_sender === 0
+              }">
+                  <span class="message-text">
+                      {{ message.text }}
+                      <span *ngIf="hasAttachment(message)" class="attachment-info"> !!! This message contains an attachment !!!</span>
+                  </span>
+              </li>
+          </ul>
+
+          <div class="message-input">
+              <input [(ngModel)]="text" placeholder="Enter your message">
+              <input type="file" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png, .pdf"> <!-- Champ pour sélectionner une pièce jointe -->
+              <button (click)="sendAttachment()">Send Attachment</button> <!-- Bouton pour envoyer la pièce jointe -->
+              <button (click)="sendMessage()">Send Message</button> <!-- Bouton pour envoyer le message -->
+          </div>
       </div>
-    </div>
   </div>
 </div>
+

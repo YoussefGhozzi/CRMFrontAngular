@@ -1,51 +1,12 @@
-
-
-<div id="app">
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a href="#" class="navbar-brand">CRM</a>
-    <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item">
-        <a  class="nav-link" routerLink="home">Home</a>
-      </li>
-    </ul>
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a  class="nav-link" routerLink="../register">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a  class="nav-link" routerLink="../login">Login</a>
-      </li>
-    </ul>
-  </nav>
-</div>
+<app-home></app-home>
 
 <div class="col-md-12">
   <div class="card card-container">
-    <img
-      id="profile-img"
-      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-      class="profile-img-card"
-    />
-    <form
-      *ngIf="!isSignUpSuccess"
-      name="form"
-      (ngSubmit)="f.form.valid && onSubmit()"
-      #f="ngForm"
-      novalidate
-    >
+    <form *ngIf="!isSignUpSuccess" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
       <div class="form-group">
         <label for="nom">Nom</label>
-        <input
-          type="text"
-          class="form-control"
-          name="nom"
-          [(ngModel)]="form.nom"
-          required
-          minlength="3"
-          maxlength="20"
-          #nom="ngModel"
-        />
-        <div class="alert-danger" *ngIf="nom.errors && f.submitted">
+        <input type="text" class="form-control" name="nom" [(ngModel)]="form.nom" required minlength="3" maxlength="20" #nom="ngModel" />
+        <div class="alert alert-danger" *ngIf="nom.errors && f.submitted">
           <div *ngIf="nom.errors['required']">Le nom est requis</div>
           <div *ngIf="nom.errors['minlength']">Le nom doit comporter au moins 3 caractères</div>
           <div *ngIf="nom.errors['maxlength']">Le nom ne peut pas dépasser 20 caractères</div>
@@ -54,17 +15,8 @@
 
       <div class="form-group">
         <label for="prenom">Prénom</label>
-        <input
-          type="text"
-          class="form-control"
-          name="prenom"
-          [(ngModel)]="form.prenom"
-          required
-          minlength="3"
-          maxlength="20"
-          #prenom="ngModel"
-        />
-        <div class="alert-danger" *ngIf="prenom.errors && f.submitted">
+        <input type="text" class="form-control" name="prenom" [(ngModel)]="form.prenom" required minlength="3" maxlength="20" #prenom="ngModel" />
+        <div class="alert alert-danger" *ngIf="prenom.errors && f.submitted">
           <div *ngIf="prenom.errors['required']">Le prénom est requis</div>
           <div *ngIf="prenom.errors['minlength']">Le prénom doit comporter au moins 3 caractères</div>
           <div *ngIf="prenom.errors['maxlength']">Le prénom ne peut pas dépasser 20 caractères</div>
@@ -73,17 +25,8 @@
 
       <div class="form-group">
         <label for="adresse">Adresse</label>
-        <input
-          type="text"
-          class="form-control"
-          name="adresse"
-          [(ngModel)]="form.adresse"
-          required
-          minlength="3"
-          maxlength="50"
-          #adresse="ngModel"
-        />
-        <div class="alert-danger" *ngIf="adresse.errors && f.submitted">
+        <input type="text" class="form-control" name="adresse" [(ngModel)]="form.adresse" required minlength="3" maxlength="50" #adresse="ngModel" />
+        <div class="alert alert-danger" *ngIf="adresse.errors && f.submitted">
           <div *ngIf="adresse.errors['required']">L'adresse est requise</div>
           <div *ngIf="adresse.errors['minlength']">L'adresse doit comporter au moins 3 caractères</div>
           <div *ngIf="adresse.errors['maxlength']">L'adresse ne peut pas dépasser 50 caractères</div>
@@ -92,17 +35,8 @@
 
       <div class="form-group">
         <label for="age">Âge</label>
-        <input
-          type="number"
-          class="form-control"
-          name="age"
-          [(ngModel)]="form.age"
-          required
-          min="0"
-          max="120"
-          #age="ngModel"
-        />
-        <div class="alert-danger" *ngIf="age.errors && f.submitted">
+        <input type="number" class="form-control" name="age" [(ngModel)]="form.age" required min="0" max="120" #age="ngModel" />
+        <div class="alert alert-danger" *ngIf="age.errors && f.submitted">
           <div *ngIf="age.errors['required']">L'âge est requis</div>
           <div *ngIf="age.errors['min']">L'âge doit être d'au moins 0</div>
           <div *ngIf="age.errors['max']">L'âge ne peut pas dépasser 120</div>
@@ -118,16 +52,8 @@
 
       <div class="form-group">
         <label for="email">Email</label>
-        <input
-          type="email"
-          class="form-control"
-          name="email"
-          [(ngModel)]="form.email"
-          required
-          email
-          #email="ngModel"
-        />
-        <div class="alert-danger" *ngIf="email.errors && f.submitted">
+        <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email #email="ngModel" />
+        <div class="alert alert-danger" *ngIf="email.errors && f.submitted">
           <div *ngIf="email.errors['required']">L'email est requis</div>
           <div *ngIf="email.errors['email']">L'email doit être une adresse email valide</div>
         </div>
@@ -135,16 +61,8 @@
 
       <div class="form-group">
         <label for="password">Mot de passe</label>
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          [(ngModel)]="form.password"
-          required
-          minlength="8"
-          #password="ngModel"
-        />
-        <div class="alert-danger" *ngIf="password.errors && f.submitted">
+        <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required minlength="8" #password="ngModel" />
+        <div class="alert alert-danger" *ngIf="password.errors && f.submitted">
           <div *ngIf="password.errors['required']">Le mot de passe est requis</div>
           <div *ngIf="password.errors['minlength']">Le mot de passe doit avoir au moins 8 caractères</div>
         </div>
@@ -152,16 +70,8 @@
 
       <div class="form-group">
         <label for="confirmPassword">Confirmer le mot de passe</label>
-        <input
-          type="password"
-          class="form-control"
-          name="confirmPassword"
-          [(ngModel)]="form.confirmPassword"
-          required
-          minlength="8"
-          #confirmPassword="ngModel"
-        />
-        <div class="alert-danger" *ngIf="confirmPassword.errors && f.submitted">
+        <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="form.confirmPassword" required minlength="8" #confirmPassword="ngModel" />
+        <div class="alert alert-danger" *ngIf="confirmPassword.errors && f.submitted">
           <div *ngIf="confirmPassword.errors['required']">Confirmer le mot de passe est requis</div>
           <div *ngIf="confirmPassword.errors['minlength']">Confirmer le mot de passe doit avoir au moins 8 caractères</div>
         </div>

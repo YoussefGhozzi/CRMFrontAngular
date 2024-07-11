@@ -12,7 +12,7 @@ export class SendEmailComponent implements OnInit {
 
   emailForm: FormGroup;
   emailSentSuccessfully: boolean = false; // Ajout d'une variable pour gérer l'affichage du message de confirmation
-
+username:string="";
   constructor(
     private fb: FormBuilder,
     private emailService: UnipileService,

@@ -6,9 +6,11 @@ import { Router } from '@angular/router';
   templateUrl: './reseaux-sociaux.component.html',
   styleUrls: ['./reseaux-sociaux.component.css']
 })
-export class ReseauxSociauxComponent {
-  selectedSocialNetwork: string = ''; // Variable pour suivre le réseau social sélectionné
 
+export class ReseauxSociauxComponent {
+  username:string="";
+  selectedSocialNetwork: string = ''; // Variable pour suivre le réseau social sélectionné
+  hoverColor: string = '';
   constructor(private tokenStorageService:TokenStorageService,private router:Router) {}
 
   loadSocialNetwork(network: string) {

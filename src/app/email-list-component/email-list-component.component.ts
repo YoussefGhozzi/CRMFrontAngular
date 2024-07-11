@@ -10,7 +10,7 @@ import { UnipileService } from '../_services/unipile.service';
 export class EmailListComponent implements OnInit {
   emails: any[] = [];
   cursor: string = '';
-
+  username : string ="";
   constructor(private emailService: UnipileService) { }
 
   ngOnInit(): void {

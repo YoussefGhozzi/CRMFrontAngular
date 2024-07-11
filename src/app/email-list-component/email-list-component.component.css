@@ -1,118 +1,66 @@
-/* email-list.component.css */
+#app {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #000; /* Couleur noire pour la barre de navigation */
+}
+
+.navbar .nav-link {
+  color: #fff; /* Couleur du texte des liens */
+}
+
+.navbar .nav-link:hover {
+  color: #ccc; /* Couleur du texte au survol */
+}
+
+.reseau-button {
+  color: #fff; /* Couleur du texte */
+  background-color: transparent; /* Fond transparent */
+  border: none;
+  cursor: pointer;
+}
+
+.reseau-button:hover {
+  color: #ccc; /* Couleur du texte au survol */
+}
 
 .email-card {
-    margin: 10px;
-  }
-  
-  .card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 15px;
-    background-color: #fff; /* Fond blanc pour contraste */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
-  }
-  
-  .card-header {
-    background-color: #f0f0f0; /* Couleur de l'en-tête */
-    padding: 10px;
-    border-bottom: 1px solid #ccc; /* Bordure en bas */
-    border-top-left-radius: 5px; /* Coins arrondis */
-    border-top-right-radius: 5px;
-  }
-  
-  .card-header h5 {
-    margin: 0;
-    font-size: 1.25rem; /* Taille de police */
-  }
-  
-  .card-body {
-    padding: 10px;
-  }
-  
-  .card-body p {
-    margin-bottom: 5px; /* Espacement entre les paragraphes */
-  }
-  
-  .card-body strong {
-    font-weight: bold; /* Texte en gras */
-  }
-  
-  .card-body .attachments-list {
-    margin-top: 10px;
-  }
-  
-  .card-body .attachments-list a {
-    display: block;
-    margin-bottom: 5px;
-    color: #007bff; /* Couleur du lien */
-    text-decoration: none; /* Pas de soulignement */
-  }
-  
-  .card-body .attachments-list a:hover {
-    text-decoration: underline; /* Soulignement au survol */
-  }
-  
-  .profile-icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%; /* Icône de profil ronde */
-    margin-left: 10px;
-  }
-  
-  .navbar {
-    margin-bottom: 20px; /* Espacement en bas de la navbar */
-  }
-  
-  .reseau-button {
-    background-color: #242524;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin-right: 10px;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .reseau-button:hover {
-    opacity: 0.9;
-  }
-  
-  .navbar-brand {
-    font-size: 1.5rem; /* Taille de police plus grande pour le titre */
-  }
-  
-  .navbar-nav .nav-item {
-    margin-left: 10px;
-  }
-  
-  .navbar-nav.ml-auto {
-    display: flex;
-    align-items: center; /* Centrer verticalement les éléments */
-  }
-  
-  .nav-link {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-link:hover {
-    color: #ccc; /* Couleur au survol */
-  }
-  
-  .logout-link {
-    cursor: pointer;
-  }
-  
-  /* Responsive adjustments */
-  @media screen and (max-width: 600px) {
-    .email-card {
-      margin: 5px; /* Réduire la marge sur mobile */
-    }
-    
-    .navbar-brand {
-      font-size: 1.2rem; /* Taille de police réduite pour mobile */
-    }
-  }
-  
+  margin-bottom: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  padding: 10px;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.attachments-list {
+  margin-top: 10px;
+}
+
+.mat-list-item {
+  margin-bottom: 5px;
+}
+
+.mat-list-item a {
+  color: #007bff; /* Couleur des liens des pièces jointes */
+  text-decoration: none;
+}
+
+.mat-list-item a:hover {
+  text-decoration: underline;
+}
+a.nav-link{
+  margin-top: 5%;
+}

@@ -23,8 +23,17 @@ import { SafeUrlPipe } from './safe-url.pipe';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ChatComponent } from './chat/chat.component';
 import { ResizeImagePipe } from './resize-image.pipe';
-
-
+import { PatientListComponent } from './patient-list/patient-list.component';
+import { PatientFormComponent } from './patient-form/patient-form.component';
+import { PatientUpdateComponent } from './patient-update/patient-update.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -44,12 +53,24 @@ import { ResizeImagePipe } from './resize-image.pipe';
     SafeUrlPipe,
     ChatComponent,
     ResizeImagePipe,
+    PatientListComponent,
+    PatientFormComponent,
+    PatientUpdateComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatTableModule,
+    MatFormFieldModule,
+    
     HttpClientModule, RouterModule.forRoot([ // Assurez-vous que vous avez des routes définies
       {path:'home', component:HomeComponent},
   { path: 'login', component: LoginComponent },
@@ -65,7 +86,7 @@ import { ResizeImagePipe } from './resize-image.pipe';
   {path:'chat',component:ChatComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path:'**',redirectTo:'home'}
-    ])
+    ]), BrowserAnimationsModule
   ],
   providers: [authInterceptorProviders,UnipileService],
   bootstrap: [AppComponent]

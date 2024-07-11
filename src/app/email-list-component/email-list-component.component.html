@@ -1,60 +1,92 @@
 <div id="app">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
       <!-- Marque de la navbar -->
-      <a href="#" class="navbar-brand">CRM</a>
-  
+      <a class="navbar-brand" routerLink="/">CRM</a>
       <!-- Bouton Réseaux Sociaux -->
-      <button class="reseau-button" >
-        Réseaux Sociaux
+<button class="reseau-button" routerLink="../reseaux-sociaux">
+  Réseaux Sociaux
+</button>
+
+    <!-- Autres éléments de menu peuvent être ajoutés ici -->
+  
+      <!-- Bouton Menu -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
       </button>
+      
+      <!-- Contenu de la navbar -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Liens de la navbar à gauche -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <button class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</button>
+          </li>
+        </ul>
+        
+       
   
-      <!-- Liens de la navbar à gauche -->
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a href="../Super_Admin" class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</a>
-        </li>
-      </ul>
-  
-      <!-- Liens de la navbar à droite -->
-      <div>
+        <!-- Liens de la navbar à droite -->
         <ul class="navbar-nav ml-auto">
-          <li class="nav">
-            <a href="/profile" class="nav-link" routerLink="../profile">
-              <img src="../../assets/person.svg" alt="profile" class="profile-icon"><!-- Icône de profil -->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">{{ username }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href=""(click)="logout()">Déconnexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">
+              <mat-icon>person</mat-icon>
             </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link" (click)="logout()">LogOut</a>
+            <a class="nav-link" href="https://www.facebook.com" target="_blank">
+              <mat-icon style="color: blue;">facebook</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/chat">
+              <mat-icon style="color: green;">chat</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/email-list">
+              <mat-icon style="color: red;">email</mat-icon>
+            </a>
           </li>
         </ul>
       </div>
-    </nav>
-  
+    </div>
+  </nav>
+</div>
 
 
 
 <!-- email-list.component.html -->
 <div class="email-card" *ngFor="let email of emails">
-    <div class="card">
-      <div class="card-header">
-        <h5>{{ email.subject }}</h5>
+  <mat-card class="card">
+    <mat-card-header class="card-header">
+      <mat-card-title>{{ email.subject }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-body">
+      <p><strong>Date:</strong> {{ email.date | date }}</p>
+      <p><strong>From:</strong> {{ email.from_attendee.display_name }} ({{ email.from_attendee.identifier }})</p>
+      <p><strong>To:</strong>
+        <span *ngFor="let attendee of email.to_attendees">{{ attendee.display_name }} ({{ attendee.identifier }}), </span>
+      </p>
+      <p><strong>Role:</strong> {{ email.role }}</p>
+      <p><strong>Body:</strong></p>
+      <div [innerHTML]="email.body"></div>
+
+      <div *ngIf="email.attachments.length > 0" class="attachments-list">
+        <p><strong>Attachments:</strong></p>
+        <mat-list>
+          <mat-list-item *ngFor="let attachment of email.attachments">
+            <a matLine [href]="attachment.url | safeUrl" target="_blank" (click)="openAttachment(attachment.path)">{{ attachment.name }}</a>
+          </mat-list-item>
+        </mat-list>
       </div>
-      <div class="card-body">
-        <p><strong>Date:</strong> {{ email.date }}</p>
-        <p><strong>From:</strong> {{ email.from_attendee.display_name }} ({{ email.from_attendee.identifier }})</p>
-        <p><strong>To:</strong> 
-          <span *ngFor="let attendee of email.to_attendees">
-            {{ attendee.display_name }} ({{ attendee.identifier }}),
-          </span>
-        </p>
-        <p><strong>Role:</strong> {{ email.role }}</p>
-        <p><strong>Body:</strong></p>
-        <div [innerHTML]="email.body"></div>
-        
-        <div *ngFor="let attachment of email.attachments">
-            <p><strong>Attachments:</strong></p>
-          <a [href]="attachment.url | safeUrl" target="_blank"(click)="openAttachment(attachment.path)">{{ attachment.name }}</a>
-        </div>
-      </div>
-    </div>
+    </mat-card-content>
+  </mat-card>
 </div>
+

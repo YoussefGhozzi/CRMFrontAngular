@@ -15,7 +15,9 @@ import { ReseauxSociauxComponent } from './reseaux-sociaux/reseaux-sociaux.compo
 import { SendEmailComponent } from './send-email/send-email.component';
 import {EmailListComponent}from './email-list-component/email-list-component.component'
 import { ChatComponent } from './chat/chat.component';
-
+import { PatientListComponent } from './patient-list/patient-list.component';
+import { PatientFormComponent } from './patient-form/patient-form.component';
+import { PatientUpdateComponent } from './patient-update/patient-update.component';
 
 
 const routes: Routes = [
@@ -31,6 +33,9 @@ const routes: Routes = [
   {path:'send-mail',component:SendEmailComponent},
   {path:'email-list',component:EmailListComponent},
   {path:'chat',component:ChatComponent},
+  { path: 'patientss', component: PatientListComponent },
+  { path: 'patients/new', component: PatientFormComponent },
+  { path: 'patients/:id', component: PatientUpdateComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path:'**',redirectTo:'home'},
 ];
