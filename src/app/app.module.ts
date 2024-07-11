@@ -38,6 +38,7 @@ import { AccueilSuperAdminComponent } from './components/accueil-super-admin/acc
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AdminModule } from './components/accueil-super-admin/admin.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -62,6 +63,7 @@ import { AdminModule } from './components/accueil-super-admin/admin.module';
     PatientUpdateComponent,
   ],
   imports: [
+    MatPaginatorModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

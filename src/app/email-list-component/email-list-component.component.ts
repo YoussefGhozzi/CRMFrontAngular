@@ -1,54 +1,86 @@
-// email-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { UnipileService } from '../_services/unipile.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-email-list',
   templateUrl: './email-list-component.component.html',
   styleUrls: ['./email-list-component.component.css']
+
 })
 export class EmailListComponent implements OnInit {
   emails: any[] = [];
+  filteredEmails: any[] = [];
+  paginatedEmails: any[] = [];
+  pageSize = 5;
   cursor: string = '';
-  username : string ="";
+  username: string = "";
+  length = 0;
+  searchTerm: string = '';
+
   constructor(private emailService: UnipileService) { }
 
   ngOnInit(): void {
     this.fetchEmails();
   }
 
-  // email-list.component.ts
-fetchEmails(): void {
-  this.emailService.getAllEmails().subscribe(
-    (data: any) => {
-      console.log("data email",data)
-      this.emails = data.items; // Assurez-vous que 'items' est correct selon votre API
-      this.cursor = data.cursor; // Assurez-vous que 'cursor' est correct selon votre API
-      
-      // Boucle à travers les pièces jointes avec un type spécifique
-      this.emails.forEach(email => {
-        if (email.attachments && email.attachments.length > 0) {
-          console.log(`Attachments for email with subject '${email.subject}':`);
-          email.attachments.forEach((attachment: any) => { // Spécifiez le type de 'attachment'
-            console.log(`- Name: ${attachment.name}, Path: ${attachment.path}`);
-          });
-        }
-      });
-    },
-    error => {
-      console.error('Error fetching emails', error);
-      // Gérer l'erreur selon vos besoins
-    }
-  );
-}
+  fetchEmails(): void {
+    this.emailService.getAllEmails().subscribe(
+      (data: any) => {
+        console.log("data email", data);
+        this.emails = data.items; // Ensure 'items' is correct according to your API
+        this.cursor = data.cursor; // Ensure 'cursor' is correct according to your API
+        this.filterEmails();
+      },
+      error => {
+        console.error('Error fetching emails', error);
+        // Handle the error as needed
+      }
+    );
+  }
 
+  filterEmails(): void {
+    if (this.searchTerm) {
+      this.filteredEmails = this.emails.filter(email =>
+        email.subject.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        email.body.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        email.from_attendee.display_name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        email.to_attendees.some((attendee: any) => attendee.display_name.toLowerCase().includes(this.searchTerm.toLowerCase()))
+      );
+    } else {
+      this.filteredEmails = this.emails;
+    }
+    this.length = this.filteredEmails.length;
+    this.updatePaginatedEmails();
+  }
+
+  updatePaginatedEmails(pageIndex: number = 0): void {
+    const startIndex = pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedEmails = this.filteredEmails.slice(startIndex, endIndex);
+  }
+
+  handlePageEvent(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.updatePaginatedEmails(event.pageIndex);
+    this.scrollToTop();
+  }
+
+  handleSearchTermChange(): void {
+    this.filterEmails();
+    this.updatePaginatedEmails(0); // Reset to first page after filtering
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   openAttachment(path: string): void {
-    // Méthode pour ouvrir le fichier correspondant au chemin 'path' dans un nouvel onglet
+    // Method to open the file at 'path' in a new tab
     window.open(path, '_blank');
   }
 
   logout(): void {
-    // Ajouter ici la logique de déconnexion si nécessaire
+    // Add logout logic here if needed
   }
 }

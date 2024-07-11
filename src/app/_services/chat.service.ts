@@ -77,7 +77,7 @@ private handleError(error: any) {
       this.attachmentPreviewUrl = undefined;
     }
   }
-  // getAttachments(chatId: string): Observable<any> {
-  //   return this.http.get<any>(`${this.apiUrl}/api/v1/chats/${chatId}/attachments`);
-  // }
+  getAttachments(chatId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/v1/chats/${chatId}/attachments`);
+  }
 }

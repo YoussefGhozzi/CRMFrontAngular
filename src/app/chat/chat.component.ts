@@ -23,14 +23,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   uploadedFileUrl: string = '';
   selectedFile: File | null = null;
   selectedFileUrl: SafeResourceUrl | null = null;
-  username:string="";
+  username: string = "";
 
   constructor(private chatService: ChatService, private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     console.log('Component initialized. Fetching chats...');
     this.getChats();
-  this.scheduleNextRefresh();
+    this.scheduleNextRefresh();
   }
 
   ngOnDestroy() {
@@ -68,15 +68,17 @@ export class ChatComponent implements OnInit, OnDestroy {
       console.log('Selected chat object:', chat);
     }
   }
+
   scheduleNextRefresh() {
     this.refreshTimeout = setTimeout(() => {
       this.getAllMessagesFromChat(this.chat_id);
-      console.log(this.getAllMessagesFromChat)
+      console.log(this.getAllMessagesFromChat);
     }, 5000); // Rafraîchir toutes les 5 secondes
   }
+
   getAllMessagesFromChat(chatId: string) {
     console.log('Fetching messages for chat id:', chatId);
-    console.log('tous les message ',    this.chatService.getAllMessages(chatId));
+    console.log('tous les message ', this.chatService.getAllMessages(chatId));
     this.chatService.getAllMessages(chatId).subscribe(
       (data: any) => {
         if (Array.isArray(data)) {
@@ -95,20 +97,26 @@ export class ChatComponent implements OnInit, OnDestroy {
     );
   }
 
+  send() {
+    if (this.selectedFile) {
+      this.sendAttachment();
+    } else {
+      this.sendMessage();
+    }
+  }
+
   sendMessage() {
     if (this.chat_id && this.text.trim()) {
       this.chatService.sendMessage(this.chat_id, this.text).subscribe(
         response => {
-          this.text = '';
-          this.getAllMessagesFromChat(this.chat_id);
           console.log('Message envoyé avec succès :', response);
           this.messages.push({
             text: this.text,
-            is_sender: 1, // Définissez le bon expéditeur pour ce message
-            attachments: [] // S'il n'y a pas de pièce jointe à afficher avec ce message
+            is_sender: 1,
+            attachments: []
           });
           this.text = ''; // Effacez le champ de saisie après l'envoi du message
-          // });
+          this.getAllMessagesFromChat(this.chat_id);
         },
         error => {
           this.errorMessage = 'Erreur lors de l\'envoi du message.';
@@ -116,6 +124,42 @@ export class ChatComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  sendAttachment() {
+    if (this.selectedFile) {
+      this.chatService.sendWhatsAppAttachment(this.chat_id, this.attendeesIds, this.text, this.selectedFile).subscribe(
+        (response: any) => {
+          console.log('Attachment sent successfully:', response);
+          this.uploadedFileUrl = response.fileUrl; // Assurez-vous que `response.fileUrl` contient l'URL correcte du fichier après l'envoi
+          const fileName = this.selectedFile?.name; // Récupérez le nom du fichier sélectionné
+          this.addSuccessMessage(`Fichier "${fileName}" envoyé avec succès.`);
+
+          if (this.selectedChat) {
+            if (!this.selectedChat.attachments) {
+              this.selectedChat.attachments = [];
+            }
+            this.selectedChat.attachments.push({ url: this.uploadedFileUrl, name: fileName });
+          }
+          this.messages.push({
+            text: 'Fichier attaché envoyé avec succès',
+            is_sender: 1,
+            attachments: []
+          });
+          this.selectedFile = null;
+          this.selectedFileUrl = null;
+        },
+        (error: any) => {
+          console.error('Error sending attachment', error);
+        }
+      );
+    } else {
+      console.error('No file selected');
+    }
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 
   extractPhoneNumber(chatProviderId: string): string {
@@ -160,67 +204,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     console.log('Contact saved:', contact);
   }
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-
-   
-  }
-
-  sendAttachment() {
-    if (this.selectedFile) {
-      this.chatService.sendWhatsAppAttachment(this.chat_id, this.attendeesIds, this.text, this.selectedFile).subscribe(
-        (response: any) => {
-          console.log('Attachment sent successfully:', response);
-          this.uploadedFileUrl = response.fileUrl; // Assurez-vous que `response.fileUrl` contient l'URL correcte du fichier après l'envoi
-          const fileName = this.selectedFile?.name; // Récupérez le nom du fichier sélectionné
-          this.addSuccessMessage(`Fichier "${fileName}" envoyé avec succès.`);
-
-          if (this.selectedChat) {
-            if (!this.selectedChat.attachments) {
-              this.selectedChat.attachments = [];
-            }
-            this.selectedChat.attachments.push({ url: this.uploadedFileUrl, name: fileName });
-          }
-          this.messages.push({
-            text: 'Fichier attaché envoyé avec succès',
-            is_sender: 1, // Définissez le bon expéditeur pour ce message
-            attachments: [] // S'il n'y a pas de pièce jointe à afficher avec ce message
-          });
-          // });
-          // Rafraîchir la liste des messages ou la page ici si nécessaire
-
-          // Réinitialiser les variables
-          this.selectedFile = null;
-          this.selectedFileUrl = null;
-        },
-        (error: any) => {
-          console.error('Error sending attachment', error);
-        }
-      );
-    } else {
-      console.error('No file selected');
-    }
-  }
   addSuccessMessage(message: string) {
     const successMessage = {
       text: message,
-      is_sender: 1, // Indique que c'est un message envoyé par l'utilisateur
-      attachments: [] // Vous pouvez ajouter des informations sur l'envoi ici si nécessaire
+      is_sender: 1,
+      attachments: []
     };
     this.messages.push(successMessage);
   }
-  
-  // loadAttachments() {
-  //   this.chatService.getAttachments(this.chat_id).subscribe(
-  //     (response: any) => {
-  //       console.log('Attachments received successfully:', response);
-  //       this.attachments = response;
-  //     },
-  //     (error: any) => {
-  //       console.error('Error receiving attachments', error);
-  //     }
-  //   );
-  // }
 
   isImage(url: string): boolean {
     if (!url) {
@@ -228,9 +219,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
     const splitUrl = url.split('.');
     const extension = splitUrl[splitUrl.length - 1].toLowerCase();
-    if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' || extension === 'gif') {
-      return true;
-    } return false;}
+    return extension === 'jpg' || extension === 'jpeg' || extension === 'png' || extension === 'gif';
+  }
 
   handleFileInput(event: any): void {
     const file: File = event.target.files[0];
@@ -249,23 +239,23 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
   }
 
-  isPdfType(fileType: string| undefined): boolean {
+  isPdfType(fileType: string | undefined): boolean {
     return fileType === 'application/pdf';
   }
-  isWordType(fileType: string| undefined): boolean {
-    return !!fileType &&fileType.includes('application/word') 
-  }
-  
-  isExcelType(fileType: string| undefined): boolean {
-    return !!fileType &&fileType.includes('application/excel') 
-  }
-  
-  isCsvType(fileType: string| undefined): boolean {
-    return !!fileType &&fileType.includes('text/csv');
-  }
-  
 
-  isDocumentType(fileType: string| undefined): boolean {
+  isWordType(fileType: string | undefined): boolean {
+    return !!fileType && fileType.includes('application/word');
+  }
+
+  isExcelType(fileType: string | undefined): boolean {
+    return !!fileType && fileType.includes('application/excel');
+  }
+
+  isCsvType(fileType: string | undefined): boolean {
+    return !!fileType && fileType.includes('text/csv');
+  }
+
+  isDocumentType(fileType: string | undefined): boolean {
     return (
       fileType === 'application/msword' ||
       fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
@@ -277,9 +267,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   isImageType(fileType: string | undefined): boolean {
     return !!fileType && fileType.startsWith('image/');
   }
+
   hasAttachment(message: any): boolean {
     return message && message.attachments && message.attachments.length > 0;
   }
-  
- 
 }

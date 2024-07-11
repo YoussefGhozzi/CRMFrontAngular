@@ -4,11 +4,9 @@
       <!-- Marque de la navbar -->
       <a class="navbar-brand" routerLink="/">CRM</a>
       <!-- Bouton Réseaux Sociaux -->
-<button class="reseau-button" routerLink="../reseaux-sociaux">
-  Réseaux Sociaux
-</button>
-
-    <!-- Autres éléments de menu peuvent être ajoutés ici -->
+      <button class="reseau-button" routerLink="../reseaux-sociaux">
+        Réseaux Sociaux
+      </button>
   
       <!-- Bouton Menu -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,8 +21,6 @@
             <button class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</button>
           </li>
         </ul>
-        
-       
   
         <!-- Liens de la navbar à droite -->
         <ul class="navbar-nav ml-auto">
@@ -32,7 +28,7 @@
             <a class="nav-link" routerLink="/profile">{{ username }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href=""(click)="logout()">Déconnexion</a>
+            <a class="nav-link" href="" (click)="logout()">Déconnexion</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/profile">
@@ -59,7 +55,6 @@
     </div>
   </nav>
 </div>
-
 
 <div *ngIf="errorMessage" class="error-message">
   {{ errorMessage }}
@@ -101,11 +96,12 @@
 
           <div class="message-input">
               <input [(ngModel)]="text" placeholder="Enter your message">
-              <input type="file" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png, .pdf"> <!-- Champ pour sélectionner une pièce jointe -->
-              <button (click)="sendAttachment()">Send Attachment</button> <!-- Bouton pour envoyer la pièce jointe -->
-              <button (click)="sendMessage()">Send Message</button> <!-- Bouton pour envoyer le message -->
+              <div class="file-upload">
+                <input type="file" id="file" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png, .pdf">
+                <label for="file"><mat-icon>upload</mat-icon></label>
+              </div>
+                            <button (click)="send()">Send</button> <!-- Bouton unique pour envoyer le message ou la pièce jointe -->
           </div>
       </div>
   </div>
 </div>
-

@@ -15,13 +15,16 @@ export class BoardUserComponent implements OnInit {
 
   ngOnInit(): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log("userInfo",user);
     this.username = user.nom; 
     this.userService.getUserBoard().subscribe({
       next: data => {
         this.content = data;
+        console.log("getUserBoard",data);
       },
       error: err => {
         this.content = JSON.parse(err.error).message;
+        console.log("error",this.content);
       }
     });
     

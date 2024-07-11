@@ -3,26 +3,36 @@
 }
 
 .navbar {
-  background-color: #000; /* Couleur noire pour la barre de navigation */
+  background-color: #000; /* Black background for the navbar */
 }
 
 .navbar .nav-link {
-  color: #fff; /* Couleur du texte des liens */
+  color: #fff; /* White text color for navbar links */
 }
 
 .navbar .nav-link:hover {
-  color: #ccc; /* Couleur du texte au survol */
+  color: #ccc; /* Lighter color on hover */
 }
 
 .reseau-button {
-  color: #fff; /* Couleur du texte */
-  background-color: transparent; /* Fond transparent */
+  color: #fff; /* White text */
+  background-color: transparent; /* Transparent background */
   border: none;
   cursor: pointer;
 }
 
 .reseau-button:hover {
-  color: #ccc; /* Couleur du texte au survol */
+  color: #ccc; /* Lighter color on hover */
+}
+
+.email-inbox {
+  margin-top: 20px;
+  padding-bottom: 80px; /* Padding to prevent content from being hidden behind the fixed paginator */
+}
+
+.email-inbox h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .email-card {
@@ -54,13 +64,40 @@
 }
 
 .mat-list-item a {
-  color: #007bff; /* Couleur des liens des pièces jointes */
+  color: #007bff; /* Blue link color for attachments */
   text-decoration: none;
 }
 
 .mat-list-item a:hover {
   text-decoration: underline;
 }
-a.nav-link{
-  margin-top: 5%;
+
+a.nav-link {
+  /* margin-top: 5%; */
+}
+
+/* Paginator styling */
+.fixed-paginator {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar .navbar-toggler {
+    margin-top: 10px;
+  }
+  .navbar .navbar-collapse {
+    text-align: center;
+  }
+  .navbar .nav-link {
+    margin-top: 10px;
+  }
 }
