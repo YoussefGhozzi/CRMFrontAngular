@@ -34,6 +34,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
+import { AccueilSuperAdminComponent } from './components/accueil-super-admin/accueil-super-admin.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { AdminModule } from './components/accueil-super-admin/admin.module';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -70,6 +74,10 @@ import { MatTableModule } from '@angular/material/table';
     MatToolbarModule,
     MatTableModule,
     MatFormFieldModule,
+    MatGridListModule,
+    NgxChartsModule,
+
+    AdminModule,
     
     HttpClientModule, RouterModule.forRoot([ // Assurez-vous que vous avez des routes définies
       {path:'home', component:HomeComponent},
@@ -77,7 +85,11 @@ import { MatTableModule } from '@angular/material/table';
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'Medecin', component:BoardUserComponent },
-  { path: 'Super_Admin', component: BoardModeratorComponent },
+  { path: 'Super_Admin', component: BoardModeratorComponent,
+    children: [
+      { path: '', component: AccueilSuperAdminComponent },
+    ]
+   },
   { path: 'Admin', component: BoardAdminComponent },
   { path: 'Secretaire', component:  BoardSecretaireComponent },
   {path:'reseaux-sociaux', component:ReseauxSociauxComponent },
