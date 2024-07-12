@@ -1,0 +1,48 @@
+<body>
+  <div id="app">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <!-- Marque de la navbar -->
+      <a href="#" class="navbar-brand">CRM</a>
+
+      <!-- Liens de la navbar à gauche -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a href="/home" class="nav-link" routerLink="">Dashboard Medecin</a>
+        </li>
+      </ul>
+
+      <!-- Liens de la navbar à droite -->
+       <div>
+        <ul class="navbar-nav ml-auto" >
+          <li class="nav-item">
+            <a href="/profile" class="nav-link" routerLink="../profile">{{ username }}</a>
+          </li>
+        </ul>
+       </div>
+       <div>
+        
+       </div>
+       <div>
+  <ul class="navbar-nav ml-auto" >
+        <li class="nav-item">
+          <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+        </li>
+        
+        <li class="nav">
+          <a href="/profile" class="nav-link"routerLink="../profile">
+            <img src="../../assets/person.svg" alt="profile" ><!-- Icône de profil -->
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href class="nav-link" (click)="logout()">LogOut</a>
+        </li>
+      </ul>
+       </div>
+    
+    </nav>
+  </div>
+  <div class="Login">
+    <router-outlet></router-outlet>
+  </div>
+  
+</body>

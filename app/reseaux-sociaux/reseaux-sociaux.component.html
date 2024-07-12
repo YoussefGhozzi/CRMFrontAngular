@@ -1,0 +1,131 @@
+<div id="app">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+      <!-- Marque de la navbar -->
+      <a class="navbar-brand" routerLink="/">CRM</a>
+      <!-- Bouton Réseaux Sociaux -->
+<button class="reseau-button" routerLink="../reseaux-sociaux">
+  Réseaux Sociaux
+</button>
+
+    <!-- Autres éléments de menu peuvent être ajoutés ici -->
+  
+      <!-- Bouton Menu -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <!-- Contenu de la navbar -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Liens de la navbar à gauche -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <button class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</button>
+          </li>
+        </ul>
+        
+       
+  
+        <!-- Liens de la navbar à droite -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">{{ username }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href=""(click)="logout()">Déconnexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">
+              <mat-icon>person</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.facebook.com" target="_blank">
+              <mat-icon style="color: blue;">facebook</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/chat">
+              <mat-icon style="color: green;">chat</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/email-list">
+              <mat-icon style="color: red;">email</mat-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+<div class="Login">
+  <router-outlet></router-outlet>
+</div>
+
+  
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar pour les réseaux sociaux -->
+        <div class="col-md-3  ">
+          <div class="network-buttons">
+            <button class="network-button-gamil" (click)="loadSocialNetwork('gmail')"><mat-icon>Gmail</mat-icon></button>
+            <button class="network-button-what" (click)="loadSocialNetwork('whatsapp')"><mat-icon>phone</mat-icon></button>
+            <button class="network-button-fb" (click)="loadSocialNetwork('facebook')"><mat-icon>facebook</mat-icon></button>
+            <!-- Ajoutez d'autres boutons pour d'autres réseaux sociaux si nécessaire -->
+          </div>
+        </div>
+  
+        <!-- Contenu principal -->
+        <div class="col-md-9">
+          <!-- Contenu dynamique selon le réseau social sélectionné -->
+          <div *ngIf="selectedSocialNetwork === 'gmail'" class="social-content gmail">
+            <div class="event">
+              <button class="event" href="../send-mail" routerLink="../send-mail">Nouveau message</button>
+            </div>
+            <div class="event">
+              <button class="event" href="../email-list-component" routerLink="../email-list">Voir la boîte de réception</button>
+            </div>
+            <!-- Ajoutez d'autres événements pour Gmail si nécessaire -->
+          </div>
+          <div *ngIf="selectedSocialNetwork === 'whatsapp'" class="social-content whatsapp">
+            <div class="event">
+              <button class="event" href="../chat" routerLink="../chat">Voir les discussions</button>
+            </div>
+            <!-- Ajoutez d'autres événements pour WhatsApp si nécessaire -->
+          </div>
+          <div *ngIf="selectedSocialNetwork === 'facebook'" class="social-content facebook">
+            <div class="event">
+              <button class="event">Envoyer un message</button>
+            </div>
+            <div class="event">
+              <button class="event">Voir les discussions</button>
+            </div>
+            <!-- Ajoutez d'autres événements pour Facebook si nécessaire -->
+          </div>
+          <div *ngIf="selectedSocialNetwork === 'instagram'" class="social-content instagram">
+            <div class="event">
+              <button class="event">Envoyer un message</button>
+            </div>
+            <div class="event">
+              <button class="event">Voir les discussions</button>
+            </div>
+            <!-- Ajoutez d'autres événements pour Instagram si nécessaire -->
+          </div>
+          <div *ngIf="selectedSocialNetwork === 'linkedin'" class="social-content linkedin">
+            <div class="event">
+              <button class="event">Envoyer un message</button>
+            </div>
+            <div class="event">
+              <button class="event">Voir les discussions</button>
+            </div>
+            <!-- Ajoutez d'autres événements pour LinkedIn si nécessaire -->
+          </div>
+          <!-- Ajoutez d'autres sections pour d'autres réseaux sociaux si nécessaire -->
+        </div>
+      </div>
+    </div>
+  
+  

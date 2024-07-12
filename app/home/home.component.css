@@ -1,0 +1,25 @@
+.home-background {
+    background-image: url('../../assets/crm4.jpg'); /* Remplacez par le chemin de votre image */
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Ajustez selon vos besoins */
+    width: 100%;
+    position: fixed; /* Pour fixer l'image en arrière-plan */
+    top: 0;
+    left: 0;
+
+  }
+ .navbar navbar-expand-md navbar-dark bg-dark{
+    background-color: antiquewhite;
+ }
+ 
+ .nav-link{
+    cursor: pointer; /* Curseur au survol */
+    transition: transform 1s ease; /* Transition pour l'effet de zoom */
+  }
+ .nav-link:hover{
+    transform: scale(1.1); 
+    color: black;
+    width: 100%;
+    font-size: larger;
+ }
