@@ -1,0 +1,60 @@
+#app {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #000; /* Couleur noire pour la barre de navigation */
+}
+
+.navbar .nav-link {
+  color: #fff; /* Couleur du texte des liens */
+}
+
+.navbar .nav-link:hover {
+  color: #ccc; /* Couleur du texte au survol */
+}
+
+.menu-button {
+  background-color: rgb(33,37,41); /* Couleur noire pour le bouton menu */
+  border: none; /* Supprime la bordure */
+  margin-right: 10px; /* Marge à droite */
+  transition: opacity 0.3s ease; /* Transition fluide pour l'opacité */
+  color: white;
+}
+
+.menu-button:hover {
+  opacity: 0.9; /* Opacité augmentée au survol */
+}
+
+.profile-icon {
+  width: 24px; /* Taille de l'icône de profil */
+  height: 24px;
+  border-radius: 50%; /* Forme ronde */
+  margin-left: 10px; /* Marge à gauche */
+}
+
+.navbar-nav .nav-item {
+  margin-left: 10px; /* Espacement entre les éléments de la navbar */
+}
+
+.dropdown-menu {
+  background-color: #000; /* Couleur noire pour le dropdown */
+  margin-left: 9%;
+  padding: 20px;
+}
+
+.dropdown-menu .dropdown-menu-end {
+  background-color: #000; /* Couleur noire pour le dropdown à droite */
+}
+
+.dropdown-item {
+  color: rgb(232, 240, 237); /* Couleur du texte */
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #010912; /* Couleur de fond au survol */
+}
+a.nav-link{
+  margin-top: 5%;
+}

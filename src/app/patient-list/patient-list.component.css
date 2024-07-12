@@ -1,0 +1,265 @@
+.patient-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .card {
+    width: 300px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .btn {
+    margin-right: 5px;
+  }
+  .card {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.03);
+  }
+  .container {
+    margin-top: 20px;
+  }
+  
+  .card {
+    transition: transform 0.3s ease-in-out;
+    width: 100%;
+  }
+  
+  .card:hover {
+    transform: scale(1.03);
+  }
+  
+  .btn-primary {
+    margin-right: 10px;
+  }
+  
+  .card-title {
+    font-weight: bold;
+  }
+  .patient-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .card-header {
+    text-align: center;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .btn {
+    margin-top: 10px;
+  }
+  /* styles.css */
+.mat-card-title,
+.mat-card-subtitle,
+.mat-card-content {
+  font-family: 'Roboto', sans-serif; /* Exemple de police propre et attrayante */
+  font-size: 14px; /* Taille de police minimisée */
+}
+
+.mat-icon {
+  font-size: 18px; /* Taille minimisée des icônes */
+}
+/* styles.css */
+.navbar-brand {
+  font-size: 1.5rem; /* Taille de police augmentée pour la marque */
+}
+
+.navbar-nav .nav-link {
+  font-size: 1rem; /* Taille de police pour les liens de navigation */
+}
+
+.card-title {
+  font-size: 1.25rem; /* Taille de police augmentée pour le titre de la carte */
+}
+
+.card-subtitle {
+  font-size: 1rem; /* Taille de police pour le sous-titre de la carte */
+}
+
+.mat-icon {
+  font-size: 1.5rem; /* Taille de l'icône augmentée */
+  margin-right: 0.5rem; /* Marge à droite des icônes */
+}
+.container {
+  margin-top: 20px;
+}
+
+.card {
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.btn-primary {
+  margin-right: 10px;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+.patient-table {
+  margin-top: 20px;
+}
+
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.card {
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.btn-primary {
+  margin-right: 10px;
+}
+
+.card-title {
+  font-weight: bold;
+}
+.patient-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.mat-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.mat-icon {
+  font-size: 24px; /* Taille des icônes */
+}
+
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%; /* Pour arrondir les boutons en cercles */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff; /* Couleur de fond des boutons */
+  color: white; /* Couleur du texte */
+  transition: background-color 0.3s;
+}
+
+.btn-icon:hover {
+  background-color: #0056b3; /* Couleur de fond au survol */
+}
+
+.btn-circle {
+  margin-right: 8px; /* Espacement entre les boutons */
+}
+
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.btn-success {
+  background-color: #28a745; /* Couleur du bouton Ajouter un Patient */
+}
+
+.btn-success:hover {
+  background-color: #218838; /* Couleur au survol */
+}
+/* Styles pour colorer les icônes */
+#app {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #000; /* Couleur noire pour la barre de navigation */
+}
+
+.navbar .nav-link {
+  color: #fff; /* Couleur du texte des liens */
+}
+
+.navbar .nav-link:hover {
+  color: #ccc; /* Couleur du texte au survol */
+}
+
+.reseau-button {
+  color: #fff; /* Couleur du texte */
+  background-color: transparent; /* Fond transparent */
+  border: none;
+  cursor: pointer;
+}
+
+.reseau-button:hover {
+  color: #ccc; /* Couleur du texte au survol */
+}
+
+.email-card {
+  margin-bottom: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  padding: 10px;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.attachments-list {
+  margin-top: 10px;
+}
+
+.mat-list-item {
+  margin-bottom: 5px;
+}
+
+.mat-list-item a {
+  color: #007bff; /* Couleur des liens des pièces jointes */
+  text-decoration: none;
+}
+
+.mat-list-item a:hover {
+  text-decoration: underline;
+}
+a.nav-link{
+  margin-top: 5%;
+}

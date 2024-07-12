@@ -1,0 +1,28 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+const API_URL = 'http://localhost:8080/api/client/';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+  constructor(private http: HttpClient) { }
+
+  getUserProfile(): Observable<any> {
+    return this.http.get<any>(`${API_URL}login`);
+  }
+  getUserBoard(): Observable<any> {
+    return this.http.get(`${API_URL}/user`);
+  }
+
+  getModeratorBoard(): Observable<any> {
+    return this.http.get(`${API_URL}/mod`);
+  }
+
+  getAdminBoard(): Observable<any> {
+    return this.http.get(`${API_URL}/admin`);
+  }
+ 
+}

@@ -1,0 +1,8 @@
+{
+    "/api": {
+      "target": "https://api2.unipile.com:13237",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }
+  
