@@ -18,7 +18,7 @@ import { ChatComponent } from './chat/chat.component';
 import { PatientListComponent } from './patient-list/patient-list.component';
 import { PatientFormComponent } from './patient-form/patient-form.component';
 import { PatientUpdateComponent } from './patient-update/patient-update.component';
-import { AccueilSuperAdminComponent } from './components/accueil-super-admin/accueil-super-admin.component';
+
 
 
 const routes: Routes = [
@@ -27,10 +27,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'Medecin', component:BoardUserComponent },
-  { path: 'Super_Admin', component: BoardModeratorComponent,
-    children: [
-      { path: '', component: AccueilSuperAdminComponent },
-    ]},
+  { path: 'Super_Admin', component: BoardModeratorComponent,},
   { path: 'Admin', component: BoardAdminComponent },
   { path: 'Secretaire', component:  BoardSecretaireComponent },
   {path:'reseaux-sociaux', component:ReseauxSociauxComponent },

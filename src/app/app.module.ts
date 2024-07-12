@@ -34,10 +34,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
-import { AccueilSuperAdminComponent } from './components/accueil-super-admin/accueil-super-admin.component';
+// import { AccueilSuperAdminComponent } from './components/accueil-super-admin/accueil-super-admin.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { AdminModule } from './components/accueil-super-admin/admin.module';
+// import { AdminModule } from './components/accueil-super-admin/admin.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
@@ -78,8 +78,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatFormFieldModule,
     MatGridListModule,
     NgxChartsModule,
+    MatCardModule,
+    MatGridListModule,
+    NgxChartsModule,
 
-    AdminModule,
     
     HttpClientModule, RouterModule.forRoot([ // Assurez-vous que vous avez des routes définies
       {path:'home', component:HomeComponent},
@@ -87,11 +89,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'Medecin', component:BoardUserComponent },
-  { path: 'Super_Admin', component: BoardModeratorComponent,
-    children: [
-      { path: '', component: AccueilSuperAdminComponent },
-    ]
-   },
+  { path: 'Super_Admin', component: BoardModeratorComponent,},
   { path: 'Admin', component: BoardAdminComponent },
   { path: 'Secretaire', component:  BoardSecretaireComponent },
   {path:'reseaux-sociaux', component:ReseauxSociauxComponent },

@@ -10,7 +10,7 @@
 }
 
 .card {
-  background-color: rgba(255, 255, 255, 0.368);
+  background-color: rgba(243, 240, 240, 0.738);
   padding: 20px 25px 30px;
   margin-top: 50px;
   margin-bottom: 10pxx;
@@ -43,7 +43,7 @@
 }
 
 .btn-primary {
-  background-color: rgb(239, 238, 238);
+  background-color: rgba(244, 241, 241, 0.664);
   border-color: #224264;
   color: #224264;
 }
@@ -84,4 +84,9 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
+ 
+}
+.form-control{
+  background-color:rgb(255, 255, 255);
+  color: #000;
 }

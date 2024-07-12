@@ -58,3 +58,25 @@
 a.nav-link{
   margin-top: 5%;
 }
+.container-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrer les éléments horizontalement */
+  padding: 20px;
+}
+  
+.widget-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+  
+  .widget {
+    width: 45%;
+  }
+  
+  .stats-container {
+  width: 50%; /* Ajustez la largeur selon votre besoin */
+  margin-top: 20px; /* Ajoutez un espace en haut du diagramme */
+}
+  

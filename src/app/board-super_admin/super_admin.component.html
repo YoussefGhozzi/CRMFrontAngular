@@ -61,6 +61,39 @@
   </nav>
 </div>
 
-<div class="container">
-  <router-outlet></router-outlet>
+
+<div class="container-app">
+  <div class="widget-container">
+    <mat-card class="widget">
+      <mat-card-title>Gestion des Clients</mat-card-title>
+      <mat-card-content>
+        <p>Accédez à la gestion des clients <a routerLink="../patientss"><mat-icon>person_pin</mat-icon></a></p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="widget">
+      <mat-card-title>Gestion des réseaux sociaux</mat-card-title>
+      <mat-card-content>
+        <p>Accédez à la gestion des réseaux sociaux <a routerLink="../reseaux-sociaux"><mat-icon>settings_applications</mat-icon></a></p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="stats-container">
+    <ngx-charts-bar-vertical
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="single"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel">
+    </ngx-charts-bar-vertical>
+  </div>
 </div>
+
+<app-statistics></app-statistics>
+<app-message-stats></app-message-stats>
