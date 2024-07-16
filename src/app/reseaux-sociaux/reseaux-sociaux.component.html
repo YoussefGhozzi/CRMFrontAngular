@@ -1,38 +1,23 @@
 <div id="app">
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
-      <!-- Marque de la navbar -->
       <a class="navbar-brand" routerLink="/">CRM</a>
-      <!-- Bouton Réseaux Sociaux -->
-<button class="reseau-button" routerLink="../reseaux-sociaux">
-  Réseaux Sociaux
-</button>
-
-    <!-- Autres éléments de menu peuvent être ajoutés ici -->
-  
-      <!-- Bouton Menu -->
+      <button class="reseau-button" routerLink="../reseaux-sociaux">Réseaux Sociaux</button>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      
-      <!-- Contenu de la navbar -->
       <div class="collapse navbar-collapse" id="navbarNav">
-        <!-- Liens de la navbar à gauche -->
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <button class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</button>
           </li>
         </ul>
-        
-       
-  
-        <!-- Liens de la navbar à droite -->
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" routerLink="/profile">{{ username }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href=""(click)="logout()">Déconnexion</a>
+            <a class="nav-link" href="" (click)="logout()">Déconnexion</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/profile">
@@ -45,7 +30,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/chat">
+            <a class="nav-link" routerLink="../reseaux-sociaux">
               <mat-icon style="color: green;">chat</mat-icon>
             </a>
           </li>
@@ -60,72 +45,45 @@
   </nav>
 </div>
 
-
 <div class="Login">
   <router-outlet></router-outlet>
 </div>
 
-  
-    <div class="container-fluid">
-      <div class="row">
-        <!-- Sidebar pour les réseaux sociaux -->
-        <div class="col-md-3  ">
-          <div class="network-buttons">
-            <button class="network-button-gamil" (click)="loadSocialNetwork('gmail')"><mat-icon>Gmail</mat-icon></button>
-            <button class="network-button-what" (click)="loadSocialNetwork('whatsapp')"><mat-icon>phone</mat-icon></button>
-            <button class="network-button-fb" (click)="loadSocialNetwork('facebook')"><mat-icon>facebook</mat-icon></button>
-            <!-- Ajoutez d'autres boutons pour d'autres réseaux sociaux si nécessaire -->
-          </div>
-        </div>
-  
-        <!-- Contenu principal -->
-        <div class="col-md-9">
-          <!-- Contenu dynamique selon le réseau social sélectionné -->
-          <div *ngIf="selectedSocialNetwork === 'gmail'" class="social-content gmail">
-            <div class="event">
-              <button class="event" href="../send-mail" routerLink="../send-mail">Nouveau message</button>
-            </div>
-            <div class="event">
-              <button class="event" href="../email-list-component" routerLink="../email-list">Voir la boîte de réception</button>
-            </div>
-            <!-- Ajoutez d'autres événements pour Gmail si nécessaire -->
-          </div>
-          <div *ngIf="selectedSocialNetwork === 'whatsapp'" class="social-content whatsapp">
-            <div class="event">
-              <button class="event" href="../chat" routerLink="../chat">Voir les discussions</button>
-            </div>
-            <!-- Ajoutez d'autres événements pour WhatsApp si nécessaire -->
-          </div>
-          <div *ngIf="selectedSocialNetwork === 'facebook'" class="social-content facebook">
-            <div class="event">
-              <button class="event">Envoyer un message</button>
-            </div>
-            <div class="event">
-              <button class="event">Voir les discussions</button>
-            </div>
-            <!-- Ajoutez d'autres événements pour Facebook si nécessaire -->
-          </div>
-          <div *ngIf="selectedSocialNetwork === 'instagram'" class="social-content instagram">
-            <div class="event">
-              <button class="event">Envoyer un message</button>
-            </div>
-            <div class="event">
-              <button class="event">Voir les discussions</button>
-            </div>
-            <!-- Ajoutez d'autres événements pour Instagram si nécessaire -->
-          </div>
-          <div *ngIf="selectedSocialNetwork === 'linkedin'" class="social-content linkedin">
-            <div class="event">
-              <button class="event">Envoyer un message</button>
-            </div>
-            <div class="event">
-              <button class="event">Voir les discussions</button>
-            </div>
-            <!-- Ajoutez d'autres événements pour LinkedIn si nécessaire -->
-          </div>
-          <!-- Ajoutez d'autres sections pour d'autres réseaux sociaux si nécessaire -->
-        </div>
+<div class="container-fluid mt-4">
+  <div class="row">
+    <!-- Sidebar pour les réseaux sociaux -->
+    <div class="col-md-3">
+      <div class="network-buttons mb-4">
+        <button class="btn btn-outline-primary w-100 mb-2" (click)="loadSocialNetwork('gmail')"><mat-icon>mail</mat-icon> Gmail</button>
+        <button class="btn btn-outline-success w-100 mb-2" (click)="loadSocialNetwork('whatsapp')"><mat-icon>phone</mat-icon> WhatsApp</button>
+        <button class="btn btn-outline-primary w-100 mb-2" (click)="loadSocialNetwork('facebook')"><mat-icon>facebook</mat-icon> Facebook</button>
       </div>
     </div>
-  
-  
+
+    <!-- Main content -->
+    <div class="col-md-9">
+      <div *ngIf="showForm" class="mb-4">
+        <app-add-account (onAdd)="handleAccountAdded($event)"></app-add-account>
+      </div>
+      <button class="btn btn-primary mb-4" (click)="showAddAccountForm()">Ajouter un compte</button>
+
+      <!-- Affichage des contacts -->
+      <div *ngIf="contacts.length > 0">
+        <h3>Contacts pour {{ selectedSocialNetwork }}</h3>
+        <div class="row">
+          <div class="col-md-4 mb-4" *ngFor="let contact of contacts" (click)="selectAccount(contact.account_id,contact.username)">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ contact.username }}</h5>
+                <p class="card-text">ID: {{ contact.account_id }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="contacts.length === 0 && !showForm">
+        <p class="text-muted">Aucun contact trouvé pour {{ selectedSocialNetwork }}.</p>
+      </div>
+    </div>
+  </div>
+</div>

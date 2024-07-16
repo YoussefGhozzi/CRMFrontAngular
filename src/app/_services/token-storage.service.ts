@@ -28,6 +28,18 @@ export class TokenStorageService {
   }
 
   public getUser(): any {
-    return JSON.parse(sessionStorage.getItem('auth-user') || '{}');
+    return JSON.parse(sessionStorage.getItem(USER_KEY) || '{}');
+  }
+
+  // Ajout de méthodes pour les comptes par canal
+  public saveContactsByNetwork(network: string, contacts: any[]): void {
+    const key = `${USER_KEY}-${network}-contacts`;
+    window.sessionStorage.setItem(key, JSON.stringify(contacts));
+  }
+
+  public getContactsByNetwork(network: string): any[] {
+    const key = `${USER_KEY}-${network}-contacts`;
+    const contacts = JSON.parse(sessionStorage.getItem(key) || '[]');
+    return contacts;
   }
 }

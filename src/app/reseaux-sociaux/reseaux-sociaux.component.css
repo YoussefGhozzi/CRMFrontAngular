@@ -193,3 +193,50 @@
 a.nav-link{
   margin-top: 5%;
 }
+/* src/app/reseaux-sociaux/reseaux-sociaux.component.css */
+.network-buttons button {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-body {
+  text-align: center;
+}
+
+.network-button-gmail mat-icon {
+  color: #d93025;
+}
+
+.network-button-whatsapp mat-icon {
+  color: #25d366;
+}
+
+.network-button-facebook mat-icon {
+  color: #1877f2;
+}
+
+.btn-outline-primary {
+  color: #1877f2;
+  border-color: #1877f2;
+}
+
+.btn-outline-success {
+  color: #25d366;
+  border-color: #25d366;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-success:hover {
+  color: white;
+  background-color: inherit;
+}

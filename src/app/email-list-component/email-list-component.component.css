@@ -72,9 +72,6 @@
   text-decoration: underline;
 }
 
-a.nav-link {
-  /* margin-top: 5%; */
-}
 
 /* Paginator styling */
 .fixed-paginator {
@@ -100,4 +97,184 @@ a.nav-link {
   .navbar .nav-link {
     margin-top: 10px;
   }
+}
+/* Styles for Angular Material components */
+.form-container {
+  margin-top: 5%;
+  margin-left: 30%;
+  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.success-message-card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.validation-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.recipient-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Angular Material button and input styles */
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.mat-raised-button {
+  padding: 10px 20px;
+}
+
+.mat-icon-button {
+  min-width: 0;
+}
+
+/* Hover effect for buttons */
+.mat-raised-button:hover,
+.mat-icon-button:hover {
+  background-color: #242524;
+  color: #fff;
+}
+
+a.nav-link{
+  margin-top: 5%;
+}#app {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #000; /* Couleur noire pour la barre de navigation */
+}
+
+.navbar .nav-link {
+  color: #fff; /* Couleur du texte des liens */
+}
+
+.navbar .nav-link:hover {
+  color: #ccc; /* Couleur du texte au survol */
+}
+
+.reseau-button {
+  color: #fff; /* Couleur du texte */
+  background-color: transparent; /* Fond transparent */
+  border: none;
+  cursor: pointer;
+}
+
+.reseau-button:hover {
+  color: #ccc; /* Couleur du texte au survol */
+}
+
+.email-card {
+  margin-bottom: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  padding: 10px;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.attachments-list {
+  margin-top: 10px;
+}
+
+.mat-list-item {
+  margin-bottom: 5px;
+}
+
+.mat-list-item a {
+  color: #007bff; /* Couleur des liens des pièces jointes */
+  text-decoration: none;
+}
+
+.mat-list-item a:hover {
+  text-decoration: underline;
+}
+a.nav-link{
+  margin-top: 5%;
+}
+.container {
+  margin-top: 20px;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.email-card {
+  margin-bottom: 10px;
+}
+
+.fixed-send-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.form-container {
+  position: fixed;
+  top: 10%;
+  right: 10%;
+  width: 80%;
+  max-width: 600px;
+  z-index: 1000;
+}
+
+.mat-card {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.success-message {
+  color: green;
+  margin: 10px 0;
+}
+
+.error-message {
+  color: red;
+  margin: 10px 0;
+}
+.page{
+  display: flex;
+  justify-content: center;
+}
+.alert {
+  position: fixed;
+  top: 60px; /* Ajustez cette valeur selon votre barre de navigation */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; /* Assurez-vous que l'alerte est au-dessus du reste du contenu */
+  width: 90%;
+  max-width: 600px; /* Ajustez la largeur selon vos besoins */
 }

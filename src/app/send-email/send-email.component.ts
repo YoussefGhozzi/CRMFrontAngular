@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UnipileService } from '../_services/unipile.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-send-email',
@@ -9,13 +10,15 @@ import { UnipileService } from '../_services/unipile.service';
   styleUrls: ['./send-email.component.css']
 })
 export class SendEmailComponent implements OnInit {
-
   emailForm: FormGroup;
-  emailSentSuccessfully: boolean = false; // Ajout d'une variable pour gérer l'affichage du message de confirmation
-username:string="";
+  emailSentSuccessfully: boolean = false;
+  username: string = '';
+  account_id: string='';
+
   constructor(
     private fb: FormBuilder,
     private emailService: UnipileService,
+    private route: ActivatedRoute,
     private router: Router
   ) {
     this.emailForm = this.fb.group({
@@ -23,10 +26,14 @@ username:string="";
       subject: ['', Validators.required],
       body: ['', Validators.required]
     });
-  }
+    this.route.queryParams.subscribe(params => {
+      this.account_id = params['account_id'];
+      this.username = params['username'];
+      console.log('Account ID in EmailComponent:', this.account_id);
 
-  ngOnInit(): void {
+  });
   }
+  ngOnInit(): void {}
 
   get recipientForms() {
     return this.emailForm.get('recipients') as FormArray;
@@ -53,24 +60,24 @@ username:string="";
     }
 
     const formData = new FormData();
-
     const recipients = this.emailForm.value.recipients.map((recipient: any) => ({
       display_name: recipient.display_name,
       identifier: recipient.identifier
     }));
+// Récupérer l'ID du compte de manière dynamique
 
     formData.append('to', JSON.stringify(recipients));
-    formData.append('account_id', 's1n0MG0sRSuWj5eBcHJKEQ');
+    formData.append('account_id',this.account_id); // Utiliser l'ID de compte dynamique
     formData.append('subject', this.emailForm.value.subject);
     formData.append('body', this.emailForm.value.body);
 
     this.emailService.sendEmail(formData).subscribe(
       response => {
         console.log('Email sent successfully:', response);
-        this.emailSentSuccessfully = true; // Activer le message de confirmation
+        this.emailSentSuccessfully = true;
         setTimeout(() => {
           this.router.navigate(['reseaux-sociaux']);
-        }, 2000); // Rediriger après 2 secondes
+        }, 2000);
         this.emailForm.reset();
       },
       error => {
@@ -81,6 +88,6 @@ username:string="";
   }
 
   logout() {
-    // Ajouter ici la logique de déconnexion si nécessaire
+    // Add logout logic here if needed
   }
 }

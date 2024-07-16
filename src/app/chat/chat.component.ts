@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,Input } from '@angular/core';
 import { ChatService } from '../_services/chat.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -19,18 +19,26 @@ export class ChatComponent implements OnInit, OnDestroy {
   attendeesIds: string[] = [];
   text: string = '';
   attachmentPath: string = '';
-  attachments: any[] = [];
   uploadedFileUrl: string = '';
   selectedFile: File | null = null;
   selectedFileUrl: SafeResourceUrl | null = null;
-  username: string = "";
+  account_id: string = '';
+  username: any;
 
-  constructor(private chatService: ChatService, private sanitizer: DomSanitizer) {}
+  constructor(private chatService: ChatService, private sanitizer: DomSanitizer, private route: ActivatedRoute) {}
 
-  ngOnInit() {
-    console.log('Component initialized. Fetching chats...');
-    this.getChats();
-    this.scheduleNextRefresh();
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.account_id = params['account_id'];
+      this.username = params['username']; // Récupérer le username depuis les queryParams
+      console.log('Account ID in ChatComponent:', this.account_id);
+      console.log('Username in ChatComponent:', this.username);
+  
+      if (this.account_id) {
+        this.getChats(); // Appeler la méthode pour obtenir les chats en fonction de account_id
+        this.scheduleNextRefresh();
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -40,59 +48,53 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   getChats() {
-    console.log('Fetching chats from backend...');
-    this.chatService.getChats().subscribe(
+    this.chatService.getChats(this.account_id).subscribe(
       (data: any) => {
         if (data && data.items && Array.isArray(data.items)) {
           this.chats = data.items;
           this.updateContactsFromChats();
-          console.log('Chats fetched successfully.', this.chats.length, 'chats found.');
         } else {
           this.errorMessage = 'La réponse du service getChats n\'est pas valide.';
-          console.error('La réponse du service getChats n\'est pas valide', data);
         }
       },
       error => {
         this.errorMessage = 'Erreur lors de la récupération des discussions.';
-        console.error('Erreur lors de la récupération des discussions', error);
       }
     );
   }
 
   selectChat(chat: any) {
+    console.log('Chat sélectionné :', chat);
+  
     this.selectedChat = chat;
     if (chat && chat.id) {
       this.chat_id = chat.id;
+      this.account_id = chat.account_id;
       this.attendeesIds = [chat.provider_id];
+      console.log('Chat ID sélectionné :', this.chat_id);
+      console.log('Account ID sélectionné :', this.account_id);
+      console.log('Attendees IDs :', this.attendeesIds);
+  
       this.getAllMessagesFromChat(this.chat_id);
-      console.log('Selected chat object:', chat);
     }
   }
+  
 
   scheduleNextRefresh() {
     this.refreshTimeout = setTimeout(() => {
       this.getAllMessagesFromChat(this.chat_id);
-      console.log(this.getAllMessagesFromChat);
-    }, 5000); // Rafraîchir toutes les 5 secondes
+    }, 5000);
   }
 
   getAllMessagesFromChat(chatId: string) {
-    console.log('Fetching messages for chat id:', chatId);
-    console.log('tous les message ', this.chatService.getAllMessages(chatId));
+    if (!chatId) return;
     this.chatService.getAllMessages(chatId).subscribe(
-      (data: any) => {
-        if (Array.isArray(data)) {
-          this.messages = data;
-          console.log('Messages fetched successfully.', data, 'messages found.');
-          this.scheduleNextRefresh();
-        } else {
-          this.errorMessage = 'La réponse du service getAllMessagesFromChat n\'est pas un tableau.';
-          console.error('La réponse du service getAllMessagesFromChat n\'est pas un tableau', data);
-        }
+      (data: any[]) => {
+        this.messages = data;
+        this.scheduleNextRefresh();
       },
       error => {
         this.errorMessage = 'Erreur lors de la récupération des messages du chat.';
-        console.error('Erreur lors de la récupération des messages du chat', error);
       }
     );
   }
@@ -109,32 +111,28 @@ export class ChatComponent implements OnInit, OnDestroy {
     if (this.chat_id && this.text.trim()) {
       this.chatService.sendMessage(this.chat_id, this.text).subscribe(
         response => {
-          console.log('Message envoyé avec succès :', response);
           this.messages.push({
             text: this.text,
             is_sender: 1,
             attachments: []
           });
-          this.text = ''; // Effacez le champ de saisie après l'envoi du message
+          this.text = '';
           this.getAllMessagesFromChat(this.chat_id);
         },
         error => {
           this.errorMessage = 'Erreur lors de l\'envoi du message.';
-          console.error('Erreur lors de l\'envoi du message', error);
         }
       );
     }
   }
 
   sendAttachment() {
-    if (this.selectedFile) {
+    if (this.selectedFile && this.chat_id && this.attendeesIds.length > 0) {
       this.chatService.sendWhatsAppAttachment(this.chat_id, this.attendeesIds, this.text, this.selectedFile).subscribe(
         (response: any) => {
-          console.log('Attachment sent successfully:', response);
-          this.uploadedFileUrl = response.fileUrl; // Assurez-vous que `response.fileUrl` contient l'URL correcte du fichier après l'envoi
-          const fileName = this.selectedFile?.name; // Récupérez le nom du fichier sélectionné
+          this.uploadedFileUrl = response.fileUrl;
+          const fileName = this.selectedFile?.name;
           this.addSuccessMessage(`Fichier "${fileName}" envoyé avec succès.`);
-
           if (this.selectedChat) {
             if (!this.selectedChat.attachments) {
               this.selectedChat.attachments = [];
@@ -150,125 +148,60 @@ export class ChatComponent implements OnInit, OnDestroy {
           this.selectedFileUrl = null;
         },
         (error: any) => {
-          console.error('Error sending attachment', error);
+          this.errorMessage = 'Erreur lors de l\'envoi du fichier.';
         }
       );
     } else {
-      console.error('No file selected');
+      this.errorMessage = 'No file selected or attendees not specified.';
     }
   }
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      this.selectedFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(this.selectedFile));
+    }
   }
 
   extractPhoneNumber(chatProviderId: string): string {
     if (!chatProviderId) return '';
-    const phoneNumber = chatProviderId.split('@')[0];
-    return phoneNumber;
-  }
-
-  getPhoneNumberFromChat(chat: any): string {
-    if (chat && chat.provider_id) {
-      return this.extractPhoneNumber(chat.provider_id);
-    }
-    return '';
-  }
-
-  logout(): void {
-    // Logique de déconnexion
-  }
-
-  registerName(contact: any) {
-    const newName = prompt('Entrez le nom du contact:');
-    if (newName) {
-      contact.name = newName;
-      this.saveContactName(contact);
-    }
+    const phoneRegex = /\d{10,15}/;
+    const match = chatProviderId.match(phoneRegex);
+    return match ? match[0] : '';
   }
 
   updateContactsFromChats() {
-    this.chats.forEach(chat => {
-      const phoneNumber = this.extractPhoneNumber(chat.provider_id);
-      if (phoneNumber && !this.contactExists(phoneNumber)) {
-        this.existingContacts.push({ phoneNumber });
-      }
-    });
+    this.existingContacts = this.chats.map(chat => ({
+      provider_id: chat.provider_id,
+      name: chat.name,
+      phoneNumber: this.extractPhoneNumber(chat.provider_id)
+    }));
   }
 
-  contactExists(phoneNumber: string): boolean {
-    return this.existingContacts.some(contact => contact.phoneNumber === phoneNumber);
+  getPhoneNumberFromChat(chat: any): string {
+    return this.extractPhoneNumber(chat.provider_id);
   }
 
-  saveContactName(contact: any) {
-    console.log('Contact saved:', contact);
-  }
-
-  addSuccessMessage(message: string) {
-    const successMessage = {
-      text: message,
-      is_sender: 1,
-      attachments: []
-    };
-    this.messages.push(successMessage);
-  }
-
-  isImage(url: string): boolean {
-    if (!url) {
-      return false;
+  registerName(chat: any) {
+    const newName = prompt('Enter the new name for this contact:');
+    if (newName) {
+      chat.name = newName;
     }
-    const splitUrl = url.split('.');
-    const extension = splitUrl[splitUrl.length - 1].toLowerCase();
-    return extension === 'jpg' || extension === 'jpeg' || extension === 'png' || extension === 'gif';
-  }
-
-  handleFileInput(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.attachment = file;
-      this.attachmentPath = file.name;
-    } else {
-      this.attachment = null;
-      this.attachmentPath = '';
-    }
-  }
-
-  openFile() {
-    if (this.selectedFileUrl) {
-      window.open(this.selectedFileUrl.toString(), '_blank');
-    }
-  }
-
-  isPdfType(fileType: string | undefined): boolean {
-    return fileType === 'application/pdf';
-  }
-
-  isWordType(fileType: string | undefined): boolean {
-    return !!fileType && fileType.includes('application/word');
-  }
-
-  isExcelType(fileType: string | undefined): boolean {
-    return !!fileType && fileType.includes('application/excel');
-  }
-
-  isCsvType(fileType: string | undefined): boolean {
-    return !!fileType && fileType.includes('text/csv');
-  }
-
-  isDocumentType(fileType: string | undefined): boolean {
-    return (
-      fileType === 'application/msword' ||
-      fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
-      fileType === 'application/vnd.ms-excel' ||
-      fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    );
-  }
-
-  isImageType(fileType: string | undefined): boolean {
-    return !!fileType && fileType.startsWith('image/');
   }
 
   hasAttachment(message: any): boolean {
     return message && message.attachments && message.attachments.length > 0;
+  }
+
+  addSuccessMessage(message: string) {
+    this.messages.push({
+      text: message,
+      is_sender: 1,
+      attachments: []
+    });
+  }
+
+  logout() {
+    // Implement your logout logic here
   }
 }

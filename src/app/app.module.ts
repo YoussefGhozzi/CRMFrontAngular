@@ -39,6 +39,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 // import { AdminModule } from './components/accueil-super-admin/admin.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AddAccountComponent  } from './add-contact/add-contact.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -61,6 +62,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     PatientListComponent,
     PatientFormComponent,
     PatientUpdateComponent,
+    AddAccountComponent 
   ],
   imports: [
     MatPaginatorModule,
