@@ -1,0 +1,106 @@
+<div id="app">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+      <!-- Marque de la navbar -->
+      <a class="navbar-brand" routerLink="/">CRM</a>
+      <!-- Bouton Réseaux Sociaux -->
+      <button class="reseau-button" routerLink="../reseaux-sociaux">
+        Réseaux Sociaux
+      </button>
+  
+      <!-- Bouton Menu -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <!-- Contenu de la navbar -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Liens de la navbar à gauche -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <button class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</button>
+          </li>
+        </ul>
+  
+        <!-- Liens de la navbar à droite -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="" (click)="logout()">Déconnexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">
+              <mat-icon>person</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.facebook.com" target="_blank">
+              <mat-icon style="color: blue;">facebook</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/chat">
+              <mat-icon style="color: green;">chat</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/email-list">
+              <mat-icon style="color: red;">email</mat-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- Fichier template HTML pour le composant de chat -->
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
+
+
+<div *ngIf="account_id">
+  <h2>Chats pour le compte {{ username }}</h2>
+
+
+
+  
+<div class="chat-container">
+  <div class="chat-list-column">
+    <div class="chat-list-container">
+      <h1>Mes Contacts :</h1>
+      <ul class="chat-list">
+        <li *ngFor="let chat of chats" (click)="selectChat(chat)">
+          <p>Numéro de téléphone: +{{ getPhoneNumberFromChat(chat) }}</p>
+          <p *ngIf="chat.name">Nom de contact: {{ chat.name }}</p>
+          <button *ngIf="!chat.name" (click)="registerName(chat)" class="butt">Enregistrer Nom</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chat-window-column">
+    <div *ngIf="selectedChat" class="chat-window">
+      <h1>Discussion avec {{ selectedChat.name ? selectedChat.name : getPhoneNumberFromChat(selectedChat) }}</h1>
+      <ul class="message-list">
+        <li *ngFor="let message of messages" [ngClass]="{
+            'message-sent': message.is_sender === 1,
+            'message-received': message.is_sender === 0
+        }">
+          <span class="message-text">{{ message.text }}
+            <span *ngIf="hasAttachment(message)" class="attachment-info"> !!! This message contains an attachment !!!</span>
+          </span>
+        </li>
+      </ul>
+      <div class="message-input">
+        <input [(ngModel)]="text" placeholder="Enter your message">
+        <div class="file-upload">
+          <input type="file" id="file" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png, .pdf">
+          <label for="file"><mat-icon>upload</mat-icon></label>
+        </div>
+        <button (click)="send()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>

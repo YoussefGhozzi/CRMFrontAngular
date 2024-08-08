@@ -1,0 +1,133 @@
+<!-- navbar.component.html -->
+<!-- navbar.component.html -->
+<div id="app">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+      <!-- Marque de la navbar -->
+      <a class="navbar-brand" routerLink="/">CRM</a>
+      <!-- Bouton Réseaux Sociaux -->
+      <button href="../patientss" class="reseau-button" routerLink="../../patientss">
+        Gérer les Patients
+      </button>
+      <!-- Bouton Menu -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Contenu de la navbar -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Liens de la navbar à gauche -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <button class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</button>
+          </li>
+        </ul>
+        <!-- Liens de la navbar à droite -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">{{ username }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="" (click)="logout()">Déconnexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">
+              <mat-icon>person</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.facebook.com" target="_blank">
+              <mat-icon style="color: blue;">facebook</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/chat">
+              <mat-icon style="color: green;">chat</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/email-list">
+              <mat-icon style="color: red;">email</mat-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="container mt-4">
+  <h2>Liste des Patients</h2>
+  <button class="btn btn-success mb-3" routerLink="/patients/new">Ajouter un Patient</button>
+
+  <mat-form-field>
+    <mat-label>Filtrer par nom</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex: Jean">
+  </mat-form-field>
+
+  <div class="patient-table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Nom Column -->
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef> Nom </th>
+        <td mat-cell *matCellDef="let patient"> {{patient.nom}} </td>
+      </ng-container>
+
+      <!-- Prenom Column -->
+      <ng-container matColumnDef="prenom">
+        <th mat-header-cell *matHeaderCellDef> Prénom </th>
+        <td mat-cell *matCellDef="let patient"> {{patient.prenom}} </td>
+      </ng-container>
+
+      <!-- Telephone Column -->
+      <ng-container matColumnDef="telephone">
+        <th mat-header-cell *matHeaderCellDef> Téléphone </th>
+        <td mat-cell *matCellDef="let patient"> {{patient.telephone}} </td>
+      </ng-container>
+
+      <!-- Adresse Column -->
+      <ng-container matColumnDef="adresse">
+        <th mat-header-cell *matHeaderCellDef> Adresse </th>
+        <td mat-cell *matCellDef="let patient"> {{patient.adresse}} </td>
+      </ng-container>
+
+      <!-- Date de Traitement Column -->
+      <ng-container matColumnDef="dateTraitement">
+        <th mat-header-cell *matHeaderCellDef> Date de Traitement </th>
+        <td mat-cell *matCellDef="let patient"> {{ patient.dateTraitement | date:'medium' }} </td>
+      </ng-container>
+      
+
+      <!-- Date de RDV Column -->
+      <ng-container matColumnDef="dateRDV">
+        <th mat-header-cell *matHeaderCellDef> Date de RDV </th>
+        <td mat-cell *matCellDef="let patient"> {{ patient.dateRDV | date:'medium' }} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let patient">
+          <button class="btn btn-outline-primary rounded-circle mr-2" routerLink="/patients/{{ patient.id }}">
+            <mat-icon class="mat-icon edit">edit</mat-icon>
+          </button>
+          <button class="btn btn-outline-danger rounded-circle" *ngIf="patient.id !== undefined" (click)="deletePatient(patient.id!)">
+            <mat-icon class="mat-icon delete">delete</mat-icon>
+          </button>
+          <button class="btn btn-outline-info rounded-circle" *ngIf="patient.whatsappNum" routerLink="/chat">
+            <mat-icon  class="mat-icon perm_phone_msg">perm_phone_msg</mat-icon>
+          </button>
+          <button class="btn btn-outline-warning rounded-circle" *ngIf="patient.adresseMail" routerLink="/send-mail">
+            <mat-icon class="mat-icon email">email</mat-icon>
+          </button>
+          <button class="btn btn-outline-primary rounded-circle" *ngIf="patient.facebookLink" (click)="openFacebook(patient.facebookLink)">
+            <mat-icon class="mat-icon facebook">facebook</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>
+<router-outlet></router-outlet>

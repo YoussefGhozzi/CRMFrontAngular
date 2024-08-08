@@ -1,0 +1,159 @@
+<div id="app">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+      <!-- Navbar Brand -->
+      <a class="navbar-brand" routerLink="/">CRM</a>
+      <!-- Social Networks Button -->
+      <button class="reseau-button" routerLink="../reseaux-sociaux">
+        Réseaux Sociaux
+      </button>
+      <!-- Navbar Toggle Button -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Navbar Content -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Left-aligned Links -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <button class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</button>
+          </li>
+        </ul>
+        <!-- Right-aligned Links -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="" (click)="logout()">Déconnexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">
+              <mat-icon>person</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.facebook.com" target="_blank">
+              <mat-icon style="color: blue;">facebook</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/chat">
+              <mat-icon style="color: green;">chat</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/email-list">
+              <mat-icon style="color: red;">email</mat-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="container email-inbox">
+  <div class="row">
+    <div class="col-12">
+      <h2>Boîte de Réception de : {{ username }}</h2>
+      
+      <div class="search-bar">
+        <input type="text" class="form-control" placeholder="Rechercher..." [(ngModel)]="searchTerm" (input)="handleSearchTermChange()">
+      </div>
+      <div class="email-card" *ngFor="let email of paginatedEmails">
+        <mat-card class="card">
+          <mat-card-header class="card-header">
+            <mat-card-title>{{ email.subject }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="card-body">
+            <p><strong>Date:</strong> {{ email.date | date }}</p>
+            <p><strong>From:</strong> {{ email.from_attendee.display_name }} ({{ email.from_attendee.identifier }})</p>
+            <p><strong>To:</strong>
+              <span *ngFor="let attendee of email.to_attendees">{{ attendee.display_name }} ({{ attendee.identifier }}), </span>
+            </p>
+            <p><strong>Body:</strong></p>
+            <div [innerHTML]="email.body"></div>
+            <div *ngIf="email.attachments && email.attachments.length > 0" class="attachments-list">
+              <p><strong>Attachments:</strong></p>
+              <mat-list>
+                <mat-list-item *ngFor="let attachment of email.attachments">
+                  <a matLine [href]="attachment.url | safeUrl" target="_blank" (click)="openAttachment(attachment.path)">{{ attachment.name }}</a>
+                </mat-list-item>
+              </mat-list>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fixed-send-button">
+  <button mat-fab color="primary" (click)="toggleEmailForm()">
+    <mat-icon>email</mat-icon>
+  </button>
+</div>
+
+
+ <!-- Alertes pour les messages de succès et d'erreur sous forme de cartes -->
+ <div class="container-fluid mt-3">
+  <div *ngIf="emailSentSuccessfully" class="card alert alert-success">
+    <div class="card-body">
+      <h5 class="card-title">Succès!</h5>
+      <p class="card-text">Email envoyé avec succès!</p>
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeSuccessAlert()"></button>
+    </div>
+  </div>
+  <div *ngIf="errorMessage" class="card alert alert-danger">
+    <div class="card-body">
+      <h5 class="card-title">Erreur!</h5>
+      <p class="card-text">{{ errorMessage }}</p>
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeErrorAlert()"></button>
+    </div>
+  </div>
+</div>
+<div class="form-container" *ngIf="showEmailForm">
+  <mat-card>
+    <mat-card-title>Nouvel Email</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+        <div formArrayName="recipients">
+          <div *ngFor="let recipient of recipientsArray.controls; let i = index">
+            <div [formGroupName]="i">
+              <mat-form-field>
+                <mat-label>Nom</mat-label>
+                <input matInput formControlName="display_name">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="identifier">
+              </mat-form-field>
+              <button mat-icon-button color="warn" (click)="removeRecipient(i)">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <button mat-button color="primary" (click)="addRecipient()">Ajouter Destinataire</button>
+        <mat-form-field>
+          <mat-label>Sujet</mat-label>
+          <input matInput formControlName="subject">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Message</mat-label>
+          <textarea matInput formControlName="body"></textarea>
+        </mat-form-field>
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit">Envoyer</button>
+          <button mat-button color="warn" (click)="toggleEmailForm()">Annuler</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="page">
+  <mat-paginator [length]="length" [pageSize]="pageSize" (page)="handlePageEvent($event)"></mat-paginator>
+</div>
+
+
+
+

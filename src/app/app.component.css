@@ -1,0 +1,16 @@
+/* app.component.css */
+.navbar-nav .nav-item .dropdown-menu {
+    max-width: 200px;
+  }
+  .home-background {
+    background-image: url('../assets/CRM.jpg'); /* Remplacez par le chemin de votre image */
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Ajustez selon vos besoins */
+    width: 100%;
+    position: fixed; /* Pour fixer l'image en arrière-plan */
+    top: 0;
+    left: 0;
+    z-index: -1; /* Assurez-vous que l'image est derrière tout le contenu */
+  }
+  

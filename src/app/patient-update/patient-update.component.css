@@ -1,0 +1,85 @@
+.container {
+    margin-top: 20px;
+  }
+  
+  .card {
+    width: 100%;
+  }
+  
+  .card-header {
+    text-align: center;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .btn {
+    margin-top: 10px;
+  }
+  #app {
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar {
+    background-color: #000; /* Couleur noire pour la barre de navigation */
+  }
+  
+  .navbar .nav-link {
+    color: #fff; /* Couleur du texte des liens */
+  }
+  
+  .navbar .nav-link:hover {
+    color: #ccc; /* Couleur du texte au survol */
+  }
+  
+  .reseau-button {
+    color: #fff; /* Couleur du texte */
+    background-color: transparent; /* Fond transparent */
+    border: none;
+    cursor: pointer;
+  }
+  
+  .reseau-button:hover {
+    color: #ccc; /* Couleur du texte au survol */
+  }
+  
+  .email-card {
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .card-header {
+    background-color: #f8f9fa;
+    padding: 10px;
+  }
+  
+  .card-body {
+    padding: 10px;
+  }
+  
+  .attachments-list {
+    margin-top: 10px;
+  }
+  
+  .mat-list-item {
+    margin-bottom: 5px;
+  }
+  
+  .mat-list-item a {
+    color: #007bff; /* Couleur des liens des pièces jointes */
+    text-decoration: none;
+  }
+  
+  .mat-list-item a:hover {
+    text-decoration: underline;
+  }
+  a.nav-link{
+    margin-top: 5%;
+  }

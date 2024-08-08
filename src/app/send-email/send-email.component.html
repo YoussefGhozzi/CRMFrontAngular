@@ -1,0 +1,108 @@
+<div id="app">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+      <!-- Marque de la navbar -->
+      <a class="navbar-brand" routerLink="/">CRM</a>
+      <!-- Bouton Réseaux Sociaux -->
+<button class="reseau-button" routerLink="../reseaux-sociaux">
+  Réseaux Sociaux
+</button>
+
+    <!-- Autres éléments de menu peuvent être ajoutés ici -->
+  
+      <!-- Bouton Menu -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <!-- Contenu de la navbar -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Liens de la navbar à gauche -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <button class="nav-link" routerLink="../Super_Admin">Dashboard Super Admin</button>
+          </li>
+        </ul>
+        
+       
+  
+        <!-- Liens de la navbar à droite -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">{{ username }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href=""(click)="logout()">Déconnexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/profile">
+              <mat-icon>person</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.facebook.com" target="_blank">
+              <mat-icon style="color: blue;">facebook</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/chat">
+              <mat-icon style="color: green;">chat</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/email-list">
+              <mat-icon style="color: red;">email</mat-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+<div class="Login">
+  <router-outlet></router-outlet>
+</div>
+
+<div class="form-container">
+  <form [formGroup]="emailForm" (ngSubmit)="onSubmit()" class="form">
+    <div formArrayName="recipients">
+      <div *ngFor="let recipient of recipientForms.controls; let i = index" [formGroupName]="i" class="recipient-row">
+        <mat-form-field appearance="fill">
+          <mat-label>Display Name</mat-label>
+          <input matInput formControlName="display_name" id="display_name">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="identifier" id="identifier">
+        </mat-form-field>
+        <button mat-icon-button color="warn" (click)="removeRecipient(i)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" type="button" (click)="addRecipient()">Add Recipient</button>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Subject</mat-label>
+      <input matInput formControlName="subject" id="subject">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Body</mat-label>
+      <textarea matInput formControlName="body" id="body"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Send Email</button>
+  </form>
+</div>
+
+<!-- Success message card -->
+<div *ngIf="emailSentSuccessfully" class="success-message-card mat-elevation-z2">
+  <mat-card-content>
+    <mat-icon class="validation-icon text-success">check_circle_outline</mat-icon>
+    <p class="text-success">Email envoyé avec succès!</p>
+  </mat-card-content>
+</div>
