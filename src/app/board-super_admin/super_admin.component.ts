@@ -19,79 +19,74 @@ export class BoardModeratorComponent implements OnInit {
   multi: any[] = [];
   view: [number, number] = [700, 400];
 
-  // options
-  showXAxis: boolean = true;
-  showYAxis: boolean = true;
-  gradient: boolean = false;
-  showLegend: boolean = true;
-  showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Country';
-  showYAxisLabel: boolean = true;
-  yAxisLabel: string = 'Population';
-  colorScheme: any;
+ // options
+showXAxis: boolean = true;
+showYAxis: boolean = true;
+gradient: boolean = false;
+showLegend: boolean = true;
+showXAxisLabel: boolean = true;
+xAxisLabel: string = 'Jour';
+showYAxisLabel: boolean = true;
+yAxisLabel: string = 'Nombre de consultations';
+colorScheme: any;
 
-  constructor(private userService: UserService, private tokenStorageService: TokenStorageService, private router: Router) {
-    this.single = [
-      {
-        "name": "Germany",
-        "value": 8940000
-      },
-      {
-        "name": "USA",
-        "value": 5000000
-      },
-      {
-        "name": "France",
-        "value": 7200000
-      }
-    ];
+constructor(private userService: UserService, private tokenStorageService: TokenStorageService, private router: Router) {
+  this.single = [
+    {
+      "name": "Lundi",
+      "value": 10
+    },
+    {
+      "name": "Mardi",
+      "value": 15
+    },
+    {
+      "name": "Mercredi",
+      "value": 12
+    },
+    {
+      "name": "Jeudi",
+      "value": 8
+    },
+    {
+      "name": "Vendredi",
+      "value": 17
+    }
+  ];
 
-    this.multi = [
-      {
-        "name": "Germany",
-        "series": [
-          {
-            "name": "2010",
-            "value": 7300000
-          },
-          {
-            "name": "2011",
-            "value": 8940000
-          }
-        ]
-      },
-      {
-        "name": "USA",
-        "series": [
-          {
-            "name": "2010",
-            "value": 7870000
-          },
-          {
-            "name": "2011",
-            "value": 8270000
-          }
-        ]
-      },
-      {
-        "name": "France",
-        "series": [
-          {
-            "name": "2010",
-            "value": 5000002
-          },
-          {
-            "name": "2011",
-            "value": 5800000
-          }
-        ]
-      }
-    ];
+  this.multi = [
+    {
+      "name": "Consultations",
+      "series": [
+        {
+          "name": "Lundi",
+          "value": 10
+        },
+        {
+          "name": "Mardi",
+          "value": 15
+        },
+        {
+          "name": "Mercredi",
+          "value": 12
+        },
+        {
+          "name": "Jeudi",
+          "value": 8
+        },
+        {
+          "name": "Vendredi",
+          "value": 17
+        }
+      ]
+    }
+  ];
 
-    this.colorScheme = {
-      domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-    };
-  }
+  this.colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+}
+
 
   ngOnInit(): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');

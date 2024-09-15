@@ -70,6 +70,8 @@
             <p><strong>To:</strong>
               <span *ngFor="let attendee of email.to_attendees">{{ attendee.display_name }} ({{ attendee.identifier }}), </span>
             </p>
+            <p><strong>Subject:</strong>
+            <div [innerHTML]="email.subject"></div>
             <p><strong>Body:</strong></p>
             <div [innerHTML]="email.body"></div>
             <div *ngIf="email.attachments && email.attachments.length > 0" class="attachments-list">
