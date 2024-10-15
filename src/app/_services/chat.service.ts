@@ -7,8 +7,8 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ChatService {
-  private apiUrl = 'https://api6.unipile.com:13632';
-  private apiKey = '9sxOupVE.qoIpVJ8dMcQMty04/kAF2hLpb8ShpsoUeRwyz02py3c=';
+  private apiUrl = 'https://api8.unipile.com:13837';
+  private apiKey = 'tEY2xctV.oeu29dsXdYGBGjgUlf3WRpwNNvQjDYe3RWtGm24wJsQ=';
   private account_id: string = '';
 
   constructor(private http: HttpClient) {}
